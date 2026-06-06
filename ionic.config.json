@@ -1,0 +1,7 @@
+{
+  "name": "TengoUnDato",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
