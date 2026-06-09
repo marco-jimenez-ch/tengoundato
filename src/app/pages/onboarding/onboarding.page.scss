@@ -1,0 +1,333 @@
+@keyframes float {
+  0%, 100% { transform: translateY(0);     }
+  50%       { transform: translateY(-12px); }
+}
+@keyframes floatDelay {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes spinSlow {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1);    opacity: 1;   }
+  50%       { transform: scale(1.08); opacity: 0.7; }
+}
+@keyframes pop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  70%  { transform: scale(1.08);            }
+  100% { transform: scale(1);   opacity: 1; }
+}
+@keyframes slideIn {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+@keyframes slideInDelay {
+  0%, 20% { transform: scaleX(0); opacity: 0; }
+  100%    { transform: scaleX(1); opacity: 1; }
+}
+@keyframes slideInDelay2 {
+  0%, 40% { transform: scaleX(0); opacity: 0; }
+  100%    { transform: scaleX(1); opacity: 1; }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) scale(1);        }
+  40%       { transform: translateY(-16px) scale(1.05); }
+  60%       { transform: translateY(-8px);              }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes fadeUpBig {
+  from { opacity: 0; transform: translateY(60px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+.animate-float          { animation: float           3s ease-in-out infinite; }
+.animate-float-delay    { animation: floatDelay      3s ease-in-out infinite 0.8s; }
+.animate-spin-slow      { animation: spinSlow        8s linear infinite; }
+.animate-pulse          { animation: pulse           2.5s ease-in-out infinite; }
+.animate-pop            { animation: pop             0.5s cubic-bezier(.36,.07,.19,.97) forwards; }
+.animate-slide-in       { animation: slideIn         0.5s ease forwards; }
+.animate-slide-in-delay { animation: slideInDelay    0.8s ease forwards; }
+.animate-slide-in-delay2{ animation: slideInDelay2   1.1s ease forwards; }
+.animate-bounce         { animation: bounce          1.8s ease-in-out infinite; }
+
+/* ── SPLASH (slide 0) ───────────────────────────────────────── */
+.ob-wrap { height: 100%; }
+
+.splash {
+  height: 100%;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.splash-text {
+  padding: 64px 32px 0;
+  z-index: 2;
+  animation: fadeLeft 0.7s ease forwards;
+}
+
+.splash-eyebrow {
+  font-size: 12px;
+  color: rgba(0,0,0,0.35);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.splash-title {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -2px;
+  margin-bottom: 14px;
+}
+
+.w-white { color: #111827; }
+.w-amber { color: var(--tud-amber); }
+
+.splash-sub {
+  font-size: 15px;
+  color: rgba(0,0,0,0.4);
+  line-height: 1.5;
+}
+
+/* ── Imagen centrada y grande ── */
+.splash-illus {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 20px 0;
+  animation: fadeUpBig 0.8s ease 0.25s both;
+
+  img {
+    width: 100%;
+    max-width: 380px;
+    object-fit: contain;
+    display: block;
+    animation: fadeUpBig 0.8s ease 0.25s both,
+               float 4s ease-in-out 1.1s infinite;
+  }
+}
+
+.splash-bottom {
+  padding: 16px 32px 44px;
+  z-index: 2;
+  animation: fadeUp 0.6s ease 0.5s both;
+}
+
+.btn-acceder {
+  width: 100%;
+  background: var(--tud-amber);
+  color: #111827;
+  border: none;
+  border-radius: 22px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: -0.2px;
+  margin-bottom: 14px;
+  transition: opacity 0.2s ease;
+
+  &:active { opacity: 0.85; }
+}
+
+.splash-hint {
+  text-align: center;
+  font-size: 13px;
+  color: rgba(0,0,0,0.35);
+
+  span {
+    color: var(--tud-amber);
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+/* ── ONBOARDING slides 1 y 2 ────────────────────────────────── */
+.ob-hero {
+  flex: 0 0 58%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 0 40px 40px;
+  overflow: hidden;
+  transition: background 0.5s ease;
+}
+
+.ob-top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 52px 20px 0;
+}
+
+.ob-back {
+  --color: rgba(255,255,255,0.85);
+  --padding-start: 0;
+  font-size: 22px;
+}
+
+.ob-skip {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.ob-illus-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ob-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  max-width: 360px;
+}
+
+.geo { position: absolute; }
+
+/* SLIDE 1: Verificación */
+.g-hexagon {
+  width: 110px; height: 110px;
+  background: rgba(255,255,255,0.12);
+  clip-path: polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);
+  top: 30px; left: 75px;
+}
+.g-shield {
+  width: 72px; height: 80px;
+  background: rgba(255,255,255,0.9);
+  clip-path: polygon(50% 0%,100% 20%,100% 60%,50% 100%,0% 60%,0% 20%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; align-items: center; justify-content: center;
+}
+.shield-check {
+  font-size: 28px; font-weight: 800;
+  color: #111827; margin-top: 4px;
+}
+.g-star {
+  width: 20px; height: 20px;
+  background: rgba(255,255,255,0.6);
+  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+}
+.s1 { top: 15px;    left: 20px;  width: 28px; height: 28px; }
+.s2 { bottom: 20px; right: 20px; }
+.g-ring2 {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255,255,255,0.25);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.g-bar {
+  height: 10px; border-radius: 5px;
+  background: rgba(255,255,255,0.5);
+  transform-origin: left;
+  position: absolute;
+}
+.b1 { width: 80px; left: 20px; bottom: 30px; }
+.b2 { width: 55px; left: 20px; bottom: 16px; }
+.b3 { width: 68px; left: 20px; bottom: 2px;  }
+
+/* SLIDE 2: Contacto */
+.g-phone {
+  width: 70px; height: 110px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 14px;
+  border: 3px solid rgba(255,255,255,0.4);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.g-bubble {
+  width: 50px; height: 36px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.25);
+  top: 40px;
+}
+.b-left  { left: 10px;  border-bottom-left-radius: 2px;  }
+.b-right { right: 10px; border-bottom-right-radius: 2px; }
+.g-wa {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: #25A85A;
+  display: flex; align-items: center; justify-content: center;
+  bottom: 20px; right: 30px;
+  span { color: #fff; font-size: 13px; font-weight: 800; }
+}
+.g-arc {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.15);
+  border-top-color: rgba(255,255,255,0.5);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.g-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+}
+.d1 { top: 45%; left: 5%;   }
+.d2 { top: 5%;  right: 10%; }
+
+/* ── Card inferior ──────────────────────────────────────────── */
+.ob-card {
+  flex: 1; background: #fff;
+  display: flex; flex-direction: column;
+  padding: 28px 28px 36px;
+}
+.ob-card-inner { flex: 1; }
+
+.ob-titulo {
+  font-size: 24px; font-weight: 700;
+  color: var(--tud-text);
+  letter-spacing: -0.5px;
+  margin-bottom: 12px; line-height: 1.2;
+}
+.ob-desc {
+  font-size: 14px; color: var(--tud-text-muted);
+  line-height: 1.65;
+}
+
+.ob-footer {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-top: 24px;
+}
+.ob-dots { display: flex; gap: 6px; align-items: center; }
+.ob-dot {
+  width: 8px; height: 8px;
+  border-radius: 4px; background: var(--tud-border);
+  transition: all 0.3s ease;
+  &.active { width: 24px; background: var(--tud-amber); }
+}
+.ob-btn-next {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--tud-amber); border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.3s ease;
+  ion-icon { font-size: 22px; color: #fff; }
+  &.green  { background: var(--tud-green); }
+}
+.ob-btn-start {
+  margin-top: 16px; --border-radius: 22px;
+  font-weight: 700; font-size: 16px;
+}

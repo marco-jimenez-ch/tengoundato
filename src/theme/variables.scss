@@ -1,2 +1,37 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+:root {
+  --tud-dark:       #1A1A2E;
+  --tud-dark-mid:   #16213E;
+  --tud-amber:      #E8A020;
+  --tud-amber-lt:   #F5C048;
+  --tud-amber-bg:   #FEF3DC;
+  --tud-blue-bg:    #EBF0F8;
+  --tud-green-bg:   #E6F7EE;
+  --tud-green:      #25A85A;
+  --tud-bg:         #F7F8FA;
+  --tud-card:       #FFFFFF;
+  --tud-border:     #E8EAED;
+  --tud-text:       #111827;
+  --tud-text-mid:   #374151;
+  --tud-text-muted: #9CA3AF;
+
+  --ion-color-primary:            var(--tud-amber);
+  --ion-color-primary-rgb:        232, 160, 32;
+  --ion-color-primary-contrast:   #111827;
+  --ion-color-primary-shade:      #cc8e1c;
+  --ion-color-primary-tint:       #ebb040;
+
+  --ion-color-secondary:          #111827;
+  --ion-color-secondary-rgb:      17, 24, 39;
+  --ion-color-secondary-contrast: #ffffff;
+
+  --ion-color-success:            var(--tud-green);
+  --ion-color-success-rgb:        37, 168, 90;
+  --ion-color-success-contrast:   #ffffff;
+
+  --ion-background-color:         var(--tud-bg);
+  --ion-card-background:          var(--tud-card);
+  --ion-text-color:               var(--tud-text);
+  --ion-border-color:             var(--tud-border);
+  --ion-font-family:              -apple-system, BlinkMacSystemFont,
+                                  'SF Pro Display', 'Helvetica Neue', sans-serif;
+}

@@ -1,0 +1,96 @@
+<ion-content [fullscreen]="true">
+  <div class="ob-wrap" [ngClass]="'slide-' + slideActual">
+
+    <!-- SLIDE 0: Splash -->
+    <ng-container *ngIf="slideActual === 0">
+      <div class="splash">
+        <div class="splash-text">
+          <p class="splash-eyebrow">Bienvenido a</p>
+          <h1 class="splash-title">
+            <span class="w-white">Tengo</span><br>
+            <span class="w-amber">Un</span><br>
+            <span class="w-white">Dato.</span>
+          </h1>
+          <p class="splash-sub">Oficios de confianza<br>en tu barrio</p>
+        </div>
+        <div class="splash-illus">
+          <img src="assets/slides/slide1.png" alt="maestro" />
+        </div>
+        <div class="splash-bottom">
+          <button class="btn-acceder" (click)="siguiente()">
+            Comenzar →
+          </button>
+          <p class="splash-hint">¿Ya tienes cuenta?
+            <span (click)="ir()">Inicia sesión</span>
+          </p>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- SLIDES 1 y 2: Onboarding -->
+    <ng-container *ngIf="slideActual > 0">
+      <div class="ob-hero" [style.background]="slide.bg">
+        <div class="ob-top-nav">
+          <ion-button fill="clear" class="ob-back" (click)="anterior()">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </ion-button>
+          <span class="ob-skip" (click)="ir()">Saltar</span>
+        </div>
+        <div class="ob-illus-wrap">
+          <div class="ob-scene" [ngClass]="'scene-' + slideActual">
+
+            <!-- SLIDE 1: Verificado -->
+            <ng-container *ngIf="slideActual === 1">
+              <div class="geo g-hexagon animate-pop"></div>
+              <div class="geo g-shield animate-float">
+                <div class="shield-check">✓</div>
+              </div>
+              <div class="geo g-star s1 animate-spin-slow"></div>
+              <div class="geo g-star s2 animate-float-delay"></div>
+              <div class="geo g-ring2 animate-pulse"></div>
+              <div class="geo g-bar b1 animate-slide-in"></div>
+              <div class="geo g-bar b2 animate-slide-in-delay"></div>
+              <div class="geo g-bar b3 animate-slide-in-delay2"></div>
+            </ng-container>
+
+            <!-- SLIDE 2: Contacto -->
+            <ng-container *ngIf="slideActual === 2">
+              <div class="geo g-phone animate-pop"></div>
+              <div class="geo g-bubble b-left animate-float"></div>
+              <div class="geo g-bubble b-right animate-float-delay"></div>
+              <div class="geo g-wa animate-bounce"><span>WA</span></div>
+              <div class="geo g-dot d1 animate-float"></div>
+              <div class="geo g-dot d2 animate-float-delay"></div>
+              <div class="geo g-arc animate-spin-slow"></div>
+            </ng-container>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="ob-card">
+        <div class="ob-card-inner">
+          <h2 class="ob-titulo">{{ slide.titulo }}</h2>
+          <p  class="ob-desc">{{ slide.descripcion }}</p>
+        </div>
+        <div class="ob-footer">
+          <div class="ob-dots">
+            <span *ngFor="let s of slides; let i = index"
+              class="ob-dot" [class.active]="i === slideActual">
+            </span>
+          </div>
+          <button class="ob-btn-next" (click)="siguiente()" [class.green]="esUltimo">
+            <ion-icon [name]="esUltimo ? 'checkmark-outline' : 'arrow-forward-outline'">
+            </ion-icon>
+          </button>
+        </div>
+        <ion-button *ngIf="esUltimo"
+          expand="block" color="primary"
+          class="ob-btn-start" (click)="ir()">
+          Ir al Login →
+        </ion-button>
+      </div>
+    </ng-container>
+
+  </div>
+</ion-content>

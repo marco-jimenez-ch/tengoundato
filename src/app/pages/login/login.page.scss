@@ -1,0 +1,363 @@
+// ── Variables TUD ─────────────────────────────────────────────────────────────
+$amber:      #E8A020;
+$amber-dark: #C4861A;
+$dark:       #1A1A2E;
+$text:       #111827;
+$muted:      #9CA3AF;
+$green:      #25A85A;
+$bg:         #F7F8FA;
+$card:       #FFFFFF;
+$border:     #E8EAED;
+$error:      #DC2626;
+$error-bg:   #FEF2F2;
+$error-bdr:  #FECACA;
+
+// ── Animaciones ───────────────────────────────────────────────────────────────
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes fadeUpBig {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes pulseDeco {
+  0%, 100% { transform: scale(1);    opacity: 0.12; }
+  50%       { transform: scale(1.08); opacity: 0.18; }
+}
+
+// ── Content ───────────────────────────────────────────────────────────────────
+.tud-login-content {
+  --background: #{$bg};
+}
+
+// ── Fondo decorativo ─────────────────────────────────────────────────────────
+.tud-bg-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.deco-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: $amber;
+  animation: pulseDeco 6s ease-in-out infinite;
+
+  &--1 {
+    width: 280px;
+    height: 280px;
+    top: -100px;
+    right: -80px;
+    opacity: 0.12;
+    animation-delay: 0s;
+  }
+
+  &--2 {
+    width: 200px;
+    height: 200px;
+    bottom: -60px;
+    left: -60px;
+    opacity: 0.08;
+    animation-delay: 3s;
+  }
+}
+
+// ── Wrapper scroll ───────────────────────────────────────────────────────────
+.tud-scroll-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 24px 40px;
+  min-height: 100%;
+}
+
+// ── Logo ──────────────────────────────────────────────────────────────────────
+.tud-logo-area {
+  text-align: center;
+  margin-bottom: 32px;
+
+  &.fadeUp {
+    animation: fadeUp 0.5s ease both;
+  }
+}
+
+.tud-wordmark {
+  font-size: 30px;
+  font-weight: 800;
+  color: $text;
+  letter-spacing: -0.8px;
+  margin: 0 0 4px;
+
+  .accent { color: $amber; }
+}
+
+.tud-tagline {
+  font-size: 13px;
+  color: $muted;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+// ── Card ──────────────────────────────────────────────────────────────────────
+.tud-card {
+  width: 100%;
+  max-width: 400px;
+  background: $card;
+  border-radius: 24px;
+  border: 1px solid $border;
+  padding: 28px 24px;
+  box-shadow: 0 4px 24px rgba($dark, 0.06);
+
+  &.fadeUpBig {
+    animation: fadeUpBig 0.55s ease 0.1s both;
+  }
+
+  &__title {
+    font-size: 22px;
+    font-weight: 700;
+    color: $text;
+    margin: 0 0 4px;
+  }
+
+  &__sub {
+    font-size: 13px;
+    color: $muted;
+    margin: 0 0 20px;
+  }
+}
+
+// ── Error pill ────────────────────────────────────────────────────────────────
+.tud-error-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: $error-bg;
+  border: 1px solid $error-bdr;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: $error;
+  margin-bottom: 16px;
+  animation: fadeUp 0.25s ease both;
+
+  .error-icon { font-size: 15px; }
+}
+
+// ── Campos ────────────────────────────────────────────────────────────────────
+.tud-field {
+  margin-bottom: 16px;
+
+  &--error {
+    .tud-input-wrap { border-color: $error; }
+    .tud-input      { color: $error; }
+    .tud-input-icon { color: $error; }
+  }
+}
+
+.tud-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: $dark;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+
+.tud-input-wrap {
+  display: flex;
+  align-items: center;
+  background: $bg;
+  border: 1.5px solid $border;
+  border-radius: 12px;
+  padding: 0 12px;
+  height: 48px;
+  transition: border-color 0.2s;
+
+  &:focus-within {
+    border-color: $amber;
+    background: #fff;
+  }
+}
+
+.tud-input-icon {
+  width: 18px;
+  height: 18px;
+  color: $muted;
+  flex-shrink: 0;
+  margin-right: 10px;
+  transition: color 0.2s;
+
+  .tud-input-wrap:focus-within & { color: $amber; }
+}
+
+.tud-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: $text;
+
+  &::placeholder { color: $muted; }
+}
+
+.tud-toggle-pass {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: $muted;
+  transition: color 0.2s;
+
+  &:active { color: $amber; }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.tud-field-error {
+  font-size: 11px;
+  color: $error;
+  margin: 5px 0 0 4px;
+}
+
+// ── ¿Olvidaste? ───────────────────────────────────────────────────────────────
+.tud-forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin: -4px 0 20px;
+}
+
+// ── Botones ───────────────────────────────────────────────────────────────────
+.tud-btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 52px;
+  background: $amber;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+
+  &:active:not(:disabled) {
+    background: $amber-dark;
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+}
+
+.tud-spinner {
+  --color: #fff;
+  width: 22px;
+  height: 22px;
+}
+
+.tud-btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 48px;
+  background: $card;
+  border: 1.5px solid $border;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: $text;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+
+  &:active {
+    background: $bg;
+    transform: scale(0.98);
+  }
+
+  .google-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// ── Links ─────────────────────────────────────────────────────────────────────
+.tud-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  color: $muted;
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &--amber {
+    font-size: 13px;
+    color: $amber;
+    font-weight: 700;
+
+    &:active { color: $amber-dark; }
+  }
+
+  &:not(&--amber):active { color: $amber; }
+}
+
+// ── Divisor ───────────────────────────────────────────────────────────────────
+.tud-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0;
+
+  &__line {
+    flex: 1;
+    height: 1px;
+    background: $border;
+  }
+
+  &__text {
+    font-size: 12px;
+    color: $muted;
+    white-space: nowrap;
+  }
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────────
+.tud-footer-link {
+  font-size: 13px;
+  color: $muted;
+  margin-top: 24px;
+  text-align: center;
+
+  &.fadeUp {
+    animation: fadeUp 0.5s ease 0.3s both;
+  }
+}
+
+// ── Toast global ──────────────────────────────────────────────────────────────
+.tud-toast {
+  --background: #{$dark};
+  --color: #fff;
+  --border-radius: 12px;
+  --min-width: 200px;
+  font-size: 13px;
+}
