@@ -72,6 +72,35 @@
   margin: 0;
 }
 
+/* ── RATING BAR (Angular Material) ── */
+.rating-bar-wrap {
+  margin: 16px 20px 0;
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.rating-bar-label {
+  font-size: 12px;
+  color: #999;
+  margin: 0 0 8px;
+}
+
+.rating-bar {
+  border-radius: 4px;
+  --mdc-linear-progress-active-indicator-color: #E6A817;
+  --mdc-linear-progress-track-color: rgba(0,0,0,0.08);
+}
+
+.rating-bar-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tud-dark);
+  text-align: right;
+  margin: 6px 0 0;
+}
+
 /* ── DISPONIBILIDAD ── */
 .disponibilidad-wrap {
   display: flex;
@@ -195,7 +224,7 @@
   padding: 4px 10px;
   border-radius: 20px;
 
-  &.nueva         { background: #cfe2ff; color: #084298; }
+  &.nueva          { background: #cfe2ff; color: #084298; }
   &.en-curso-badge { background: #fff3cd; color: #856404; }
 }
 

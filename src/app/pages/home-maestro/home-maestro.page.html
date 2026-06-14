@@ -27,6 +27,17 @@
     </div>
   </div>
 
+  <!-- RATING BAR — Angular Material -->
+  <div class="rating-bar-wrap">
+    <p class="rating-bar-label">Calificación promedio</p>
+    <mat-progress-bar
+      mode="determinate"
+      [value]="rating * 20"
+      class="rating-bar">
+    </mat-progress-bar>
+    <p class="rating-bar-val">{{ rating }} / 5.0</p>
+  </div>
+
   <!-- DISPONIBILIDAD -->
   <div class="disponibilidad-wrap">
     <div class="disp-info">

@@ -13,6 +13,7 @@ import {
   cashOutline,
   checkmarkCircleOutline,
 } from 'ionicons/icons';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 interface Solicitud {
   id: number;
@@ -34,6 +35,7 @@ interface Solicitud {
     FormsModule,
     IonContent,
     IonIcon,
+    MatProgressBarModule,
   ],
 })
 export class HomeMaestroPage implements OnInit {
