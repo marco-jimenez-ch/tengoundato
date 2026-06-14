@@ -1,3 +1,4 @@
+import { MatChipsModule } from '@angular/material/chips';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
