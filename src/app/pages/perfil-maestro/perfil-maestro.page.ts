@@ -26,7 +26,7 @@ export class PerfilMaestroPage implements OnInit {
   disponible = true;
   rating     = 4.8;
   trabajos   = 24;
-  reseñas    = 18;
+  resenas    = 18;
 
   form = { nombre: '', email: '', telefono: '', oficio: 'Electricista', comuna: '', tarifa: 15000 };
   formOriginal = { ...this.form };
