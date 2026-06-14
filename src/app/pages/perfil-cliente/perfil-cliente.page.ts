@@ -15,6 +15,7 @@ import {
   locationOutline,
   createOutline,
 } from 'ionicons/icons';
+import { MatButtonModule } from '@angular/material/button';
 
 interface Historial {
   id: number;
@@ -35,6 +36,7 @@ interface Historial {
     IonContent,
     IonIcon,
     IonSpinner,
+    MatButtonModule,
   ],
 })
 export class PerfilClientePage implements OnInit {
@@ -53,9 +55,9 @@ export class PerfilClientePage implements OnInit {
   formOriginal = { ...this.form };
 
   historial: Historial[] = [
-    { id: 1, servicio: 'Instalación eléctrica', maestro: 'Juan Pérez',   fecha: '2 jun 2026', rating: 5   },
-    { id: 2, servicio: 'Gasfitería',             maestro: 'Carlos Rojas', fecha: '18 may 2026', rating: 4  },
-    { id: 3, servicio: 'Pintura interior',        maestro: 'Luis Mora',    fecha: '3 may 2026', rating: 5  },
+    { id: 1, servicio: 'Instalacion electrica', maestro: 'Juan Perez',   fecha: '2 jun 2026',  rating: 5 },
+    { id: 2, servicio: 'Gasfiteria',            maestro: 'Carlos Rojas', fecha: '18 may 2026', rating: 4 },
+    { id: 3, servicio: 'Pintura interior',      maestro: 'Luis Mora',    fecha: '3 may 2026',  rating: 5 },
   ];
 
   constructor(private toast: ToastController) {

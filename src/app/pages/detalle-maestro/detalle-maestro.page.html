@@ -23,7 +23,7 @@
       <div class="hstat-sep"></div>
       <div class="hstat">
         <p class="hstat-num">{{ maestro.reviews }}</p>
-        <p class="hstat-label">Reseñas</p>
+        <p class="hstat-label">Resenas</p>
       </div>
       <div class="hstat-sep"></div>
       <div class="hstat">
@@ -49,19 +49,19 @@
     </div>
   </div>
 
-  <!-- Especialidades -->
+  <!-- Especialidades — Angular Material Chips -->
   <div class="section-card">
     <p class="section-label">Especialidades</p>
-    <div class="chips-wrap">
-      <ion-chip *ngFor="let esp of maestro.especialidades" class="esp-chip">
-        <ion-label>{{ esp }}</ion-label>
-      </ion-chip>
-    </div>
+    <mat-chip-set class="chips-wrap">
+      <mat-chip *ngFor="let esp of maestro.especialidades" class="esp-chip">
+        {{ esp }}
+      </mat-chip>
+    </mat-chip-set>
   </div>
 
-  <!-- Reseñas -->
+  <!-- Resenas -->
   <div class="section-card">
-    <p class="section-label">Últimas reseñas</p>
+    <p class="section-label">Ultimas resenas</p>
     <div class="resena-item" *ngFor="let r of maestro.resenas">
       <div class="r-top">
         <div class="r-avatar">{{ r.iniciales }}</div>
@@ -77,7 +77,7 @@
     </div>
   </div>
 
-  <!-- Botones acción -->
+  <!-- Botones accion -->
   <div class="acciones-bottom">
     <ion-button expand="block" fill="solid" color="success" class="btn-ws" (click)="contactarWhatsapp()">
       <ion-icon slot="start" name="logo-whatsapp"></ion-icon>

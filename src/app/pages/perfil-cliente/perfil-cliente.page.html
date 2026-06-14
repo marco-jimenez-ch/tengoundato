@@ -13,11 +13,11 @@
     <span class="perfil-badge">Cliente</span>
   </div>
 
-  <!-- FORMULARIO -->
+  <!-- INFO -->
   <div class="form-wrap" *ngIf="!editando">
 
     <div class="info-seccion">
-      <p class="seccion-titulo">Información personal</p>
+      <p class="seccion-titulo">Informacion personal</p>
 
       <div class="info-fila">
         <ion-icon name="person-outline" class="info-icon"></ion-icon>
@@ -30,7 +30,7 @@
       <div class="info-fila">
         <ion-icon name="mail-outline" class="info-icon"></ion-icon>
         <div class="info-data">
-          <p class="info-label">Correo electrónico</p>
+          <p class="info-label">Correo electronico</p>
           <p class="info-valor">{{ form.email }}</p>
         </div>
       </div>
@@ -38,7 +38,7 @@
       <div class="info-fila">
         <ion-icon name="call-outline" class="info-icon"></ion-icon>
         <div class="info-data">
-          <p class="info-label">Teléfono</p>
+          <p class="info-label">Telefono</p>
           <p class="info-valor">{{ form.telefono || 'No ingresado' }}</p>
         </div>
       </div>
@@ -52,17 +52,18 @@
       </div>
     </div>
 
-    <button class="btn-editar" (click)="activarEdicion()">
+    <!-- Angular Material Button -->
+    <button mat-flat-button class="btn-editar" (click)="activarEdicion()">
       <ion-icon name="create-outline"></ion-icon>
       Editar perfil
     </button>
 
   </div>
 
-  <!-- MODO EDICIÓN -->
+  <!-- MODO EDICION -->
   <div class="form-wrap" *ngIf="editando">
 
-    <p class="seccion-titulo">Editar información</p>
+    <p class="seccion-titulo">Editar informacion</p>
 
     <div class="campo">
       <label class="campo-label">Nombre completo</label>
@@ -78,7 +79,7 @@
     </div>
 
     <div class="campo">
-      <label class="campo-label">Correo electrónico</label>
+      <label class="campo-label">Correo electronico</label>
       <div class="input-wrap">
         <ion-icon name="mail-outline" class="input-icon"></ion-icon>
         <input
@@ -91,7 +92,7 @@
     </div>
 
     <div class="campo">
-      <label class="campo-label">Teléfono</label>
+      <label class="campo-label">Telefono</label>
       <div class="input-wrap">
         <ion-icon name="call-outline" class="input-icon"></ion-icon>
         <input
@@ -117,8 +118,8 @@
     </div>
 
     <div class="btns-edicion">
-      <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
-      <button class="btn-guardar" (click)="guardar()">
+      <button mat-stroked-button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+      <button mat-flat-button class="btn-guardar" (click)="guardar()">
         <ion-spinner *ngIf="isLoading" name="crescent" class="spinner"></ion-spinner>
         <span *ngIf="!isLoading">Guardar</span>
       </button>
@@ -143,7 +144,7 @@
     </div>
 
     <div class="empty-state" *ngIf="historial.length === 0">
-      <p>Aún no tienes servicios contratados.</p>
+      <p>Aun no tienes servicios contratados.</p>
     </div>
   </div>
 
