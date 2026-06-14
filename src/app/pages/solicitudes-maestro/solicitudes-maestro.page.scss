@@ -1,0 +1,106 @@
+.sol-content { --background: #F5F5F0; }
+
+.filter-wrap {
+  background: #ffffff;
+  padding: 8px 12px 10px;
+}
+
+.tud-segment {
+  --background: #F0EFE8;
+  border-radius: 12px;
+}
+
+ion-segment-button {
+  --border-radius: 10px;
+  --color: rgba(0,0,0,0.45);
+  --color-checked: #111827;
+  --indicator-color: #E8A020;
+  font-size: 13px;
+  min-height: 36px;
+}
+
+.cards-wrap { padding: 10px 12px; }
+
+.sol-card {
+  border-radius: 18px;
+  box-shadow: none;
+  border: 1px solid rgba(0,0,0,0.06);
+  margin-bottom: 12px;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cliente-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cliente-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #0F2D52;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.sol-titulo { font-size: 15px; font-weight: 600; margin: 0 0 2px; }
+.sol-fecha  { font-size: 12px; color: rgba(0,0,0,0.4); margin: 0; }
+
+.estado-badge { font-size: 11px; padding: 4px 10px; border-radius: 20px; }
+
+.sol-servicio {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 4px;
+}
+
+.sol-desc {
+  font-size: 13px;
+  color: rgba(0,0,0,0.5);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.sol-meta {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: rgba(0,0,0,0.45);
+
+  ion-icon { font-size: 14px; }
+}
+
+.acciones {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 56px 24px;
+  color: rgba(0,0,0,0.3);
+
+  .empty-icon { font-size: 52px; display: block; margin-bottom: 12px; }
+  p { font-size: 14px; }
+}

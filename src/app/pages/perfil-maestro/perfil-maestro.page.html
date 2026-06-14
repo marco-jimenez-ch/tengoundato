@@ -1,13 +1,111 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>perfil-maestro</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="perfil-content">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">perfil-maestro</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Hero -->
+  <div class="perfil-hero">
+    <div class="avatar-grande">{{ iniciales }}</div>
+    <h2 class="perfil-nombre">{{ form.nombre }}</h2>
+    <p class="perfil-oficio">{{ form.oficio }}</p>
+    <div class="perfil-stats">
+      <div class="stat">
+        <p class="stat-num">★ {{ rating }}</p>
+        <p class="stat-label">Calificación</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <p class="stat-num">{{ trabajos }}</p>
+        <p class="stat-label">Trabajos</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <p class="stat-num">{{ reseñas }}</p>
+        <p class="stat-label">Reseñas</p>
+      </div>
+    </div>
+    <ion-toggle
+      [(ngModel)]="disponible"
+      (ionChange)="cambiarDisponibilidad()"
+      class="toggle-disponible">
+      Disponible
+    </ion-toggle>
+  </div>
+
+  <!-- Info -->
+  <div class="seccion-card" *ngIf="!editando">
+
+    <div class="seccion-header">
+      <p class="seccion-titulo">Información profesional</p>
+      <ion-button fill="clear" size="small" (click)="activarEdicion()">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="info-fila">
+      <ion-icon name="mail-outline" class="info-icon"></ion-icon>
+      <div>
+        <p class="info-label">Correo</p>
+        <p class="info-valor">{{ form.email }}</p>
+      </div>
+    </div>
+
+    <div class="info-fila">
+      <ion-icon name="call-outline" class="info-icon"></ion-icon>
+      <div>
+        <p class="info-label">Teléfono</p>
+        <p class="info-valor">{{ form.telefono || 'No ingresado' }}</p>
+      </div>
+    </div>
+
+    <div class="info-fila">
+      <ion-icon name="construct-outline" class="info-icon"></ion-icon>
+      <div>
+        <p class="info-label">Oficio</p>
+        <p class="info-valor">{{ form.oficio }}</p>
+      </div>
+    </div>
+
+    <div class="info-fila">
+      <ion-icon name="location-outline" class="info-icon"></ion-icon>
+      <div>
+        <p class="info-label">Comuna</p>
+        <p class="info-valor">{{ form.comuna || 'No ingresada' }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Edición -->
+  <div class="seccion-card" *ngIf="editando">
+
+    <p class="seccion-titulo">Editar perfil</p>
+
+    <div class="campo">
+      <label class="campo-label">Nombre</label>
+      <input [(ngModel)]="form.nombre" class="campo-input" type="text" placeholder="Tu nombre" />
+    </div>
+
+    <div class="campo">
+      <label class="campo-label">Teléfono</label>
+      <input [(ngModel)]="form.telefono" class="campo-input" type="tel" placeholder="+56 9 1234 5678" />
+    </div>
+
+    <div class="campo">
+      <label class="campo-label">Comuna</label>
+      <input [(ngModel)]="form.comuna" class="campo-input" type="text" placeholder="Tu comuna" />
+    </div>
+
+    <div class="campo">
+      <label class="campo-label">Tarifa por hora ($)</label>
+      <input [(ngModel)]="form.tarifa" class="campo-input" type="number" placeholder="15000" />
+    </div>
+
+    <div class="btn-row">
+      <ion-button fill="outline" color="medium" (click)="cancelarEdicion()">Cancelar</ion-button>
+      <ion-button fill="solid" color="primary" (click)="guardar()" [disabled]="isLoading">
+        <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+        <span *ngIf="!isLoading">Guardar</span>
+      </ion-button>
+    </div>
+
+  </div>
+
 </ion-content>

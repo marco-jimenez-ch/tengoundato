@@ -1,13 +1,85 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="tud-header">
   <ion-toolbar>
-    <ion-title>listado</ion-title>
+    <ion-title>Explorar</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">listado</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="listado-content">
+
+  <!-- Buscador + filtro -->
+  <div class="search-area">
+    <ion-searchbar
+      [(ngModel)]="busqueda"
+      (ionInput)="filtrar()"
+      placeholder="Buscar oficio o nombre..."
+      class="tud-searchbar">
+    </ion-searchbar>
+
+    <div class="chips-scroll">
+      <ion-chip
+        *ngFor="let cat of categorias"
+        [class.chip-active]="catActiva === cat.id"
+        (click)="seleccionarCat(cat.id)">
+        <span class="chip-icon">{{ cat.icono }}</span>
+        <ion-label>{{ cat.nombre }}</ion-label>
+      </ion-chip>
+    </div>
+  </div>
+
+  <!-- Contador -->
+  <div class="result-count" *ngIf="!cargando">
+    {{ maestrosFiltrados.length }} maestros disponibles
+  </div>
+
+  <!-- Skeleton mientras carga -->
+  <div *ngIf="cargando" class="skeleton-wrap">
+    <ion-card *ngFor="let i of [1,2,3]" class="maestro-card skeleton-card">
+      <ion-card-content>
+        <div class="card-row">
+          <ion-skeleton-text [animated]="true" class="sk-avatar"></ion-skeleton-text>
+          <div class="card-info" style="flex:1">
+            <ion-skeleton-text [animated]="true" style="width:60%; height:16px; margin-bottom:6px;"></ion-skeleton-text>
+            <ion-skeleton-text [animated]="true" style="width:40%; height:13px;"></ion-skeleton-text>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Lista de maestros -->
+  <ion-list *ngIf="!cargando" lines="none" class="maestros-list">
+    <ion-item-sliding *ngFor="let m of maestrosFiltrados">
+
+      <ion-item class="maestro-item" (click)="verDetalle(m)" detail="false" button>
+        <div class="maestro-avatar" slot="start">{{ m.iniciales }}</div>
+        <ion-label>
+          <h2 class="m-nombre">{{ m.nombre }}</h2>
+          <p class="m-oficio">{{ m.oficio }} · {{ m.comuna }}</p>
+          <div class="m-rating">
+            <span class="estrella">★</span>
+            <span class="rating-val">{{ m.rating }}</span>
+            <span class="rating-count">({{ m.reviews }} reseñas)</span>
+          </div>
+        </ion-label>
+        <div class="m-precio" slot="end">
+          <p class="precio">${{ m.precio | number }}</p>
+          <p class="precio-label">/hora</p>
+        </div>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="primary" (click)="verDetalle(m)">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+
+  <!-- Estado vacío -->
+  <div class="empty-state" *ngIf="!cargando && maestrosFiltrados.length === 0">
+    <ion-icon name="search-outline" class="empty-icon"></ion-icon>
+    <p>Sin resultados para "{{ busqueda }}"</p>
+  </div>
+
 </ion-content>

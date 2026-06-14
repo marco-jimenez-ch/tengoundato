@@ -1,13 +1,91 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>detalle-maestro</ion-title>
+  <ion-toolbar class="detail-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/cliente/listado" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil del maestro</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">detalle-maestro</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="detail-content">
+
+  <!-- Hero -->
+  <div class="hero-wrap">
+    <div class="hero-avatar">{{ maestro.iniciales }}</div>
+    <h1 class="hero-nombre">{{ maestro.nombre }}</h1>
+    <p class="hero-oficio">{{ maestro.oficio }}</p>
+
+    <div class="hero-stats">
+      <div class="hstat">
+        <p class="hstat-num">★ {{ maestro.rating }}</p>
+        <p class="hstat-label">Rating</p>
+      </div>
+      <div class="hstat-sep"></div>
+      <div class="hstat">
+        <p class="hstat-num">{{ maestro.reviews }}</p>
+        <p class="hstat-label">Reseñas</p>
+      </div>
+      <div class="hstat-sep"></div>
+      <div class="hstat">
+        <p class="hstat-num">${{ maestro.precio | number }}</p>
+        <p class="hstat-label">/ hora</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info -->
+  <div class="info-card">
+    <div class="info-row">
+      <ion-icon name="location-outline" class="i-icon"></ion-icon>
+      <span>{{ maestro.comuna }}</span>
+    </div>
+    <div class="info-row">
+      <ion-icon name="checkmark-circle-outline" class="i-icon i-green"></ion-icon>
+      <span>Identidad verificada</span>
+    </div>
+    <div class="info-row">
+      <ion-icon name="time-outline" class="i-icon"></ion-icon>
+      <span>Disponible ahora</span>
+    </div>
+  </div>
+
+  <!-- Especialidades -->
+  <div class="section-card">
+    <p class="section-label">Especialidades</p>
+    <div class="chips-wrap">
+      <ion-chip *ngFor="let esp of maestro.especialidades" class="esp-chip">
+        <ion-label>{{ esp }}</ion-label>
+      </ion-chip>
+    </div>
+  </div>
+
+  <!-- Reseñas -->
+  <div class="section-card">
+    <p class="section-label">Últimas reseñas</p>
+    <div class="resena-item" *ngFor="let r of maestro.resenas">
+      <div class="r-top">
+        <div class="r-avatar">{{ r.iniciales }}</div>
+        <div class="r-meta">
+          <p class="r-nombre">{{ r.cliente }}</p>
+          <p class="r-fecha">{{ r.fecha }}</p>
+        </div>
+        <div class="r-stars">
+          <span *ngFor="let i of [1,2,3,4,5]" [class.filled]="i <= r.rating">★</span>
+        </div>
+      </div>
+      <p class="r-texto">{{ r.texto }}</p>
+    </div>
+  </div>
+
+  <!-- Botones acción -->
+  <div class="acciones-bottom">
+    <ion-button expand="block" fill="solid" color="success" class="btn-ws" (click)="contactarWhatsapp()">
+      <ion-icon slot="start" name="logo-whatsapp"></ion-icon>
+      Contactar por WhatsApp
+    </ion-button>
+    <ion-button expand="block" fill="outline" color="primary" (click)="solicitarServicio()">
+      Solicitar servicio
+    </ion-button>
+  </div>
+
 </ion-content>

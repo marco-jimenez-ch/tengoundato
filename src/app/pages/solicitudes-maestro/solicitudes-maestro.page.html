@@ -1,13 +1,79 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>solicitudes-maestro</ion-title>
+    <ion-title>Mis solicitudes</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">solicitudes-maestro</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="sol-content">
+
+  <!-- Segmented filter -->
+  <div class="filter-wrap">
+    <ion-segment [(ngModel)]="filtroActivo" (ionChange)="filtrar()" class="tud-segment">
+      <ion-segment-button value="todas">
+        <ion-label>Todas</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="pendiente">
+        <ion-label>Pendientes</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="aceptada">
+        <ion-label>Aceptadas</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- Solicitudes -->
+  <div class="cards-wrap">
+    <ion-card
+      *ngFor="let s of solicitudesFiltradas"
+      class="sol-card"
+      (click)="verDetalle(s)">
+
+      <ion-card-header>
+        <div class="card-top">
+          <div class="cliente-info">
+            <div class="cliente-avatar">{{ s.iniciales }}</div>
+            <div>
+              <ion-card-title class="sol-titulo">{{ s.cliente }}</ion-card-title>
+              <p class="sol-fecha">{{ s.fecha }}</p>
+            </div>
+          </div>
+          <ion-badge [color]="badgeColor(s.estado)" class="estado-badge">
+            {{ s.estadoTexto }}
+          </ion-badge>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p class="sol-servicio">{{ s.servicio }}</p>
+        <p class="sol-desc">{{ s.descripcion }}</p>
+        <div class="sol-meta">
+          <span class="meta-item">
+            <ion-icon name="location-outline"></ion-icon>
+            {{ s.comuna }}
+          </span>
+          <span class="meta-item">
+            <ion-icon name="cash-outline"></ion-icon>
+            ${{ s.presupuesto | number }}
+          </span>
+        </div>
+
+        <div class="acciones" *ngIf="s.estado === 'pendiente'">
+          <ion-button fill="outline" color="danger" size="small" (click)="rechazar(s, $event)">
+            Rechazar
+          </ion-button>
+          <ion-button fill="solid" color="primary" size="small" (click)="aceptar(s, $event)">
+            Aceptar
+          </ion-button>
+        </div>
+      </ion-card-content>
+
+    </ion-card>
+  </div>
+
+  <!-- Vacío -->
+  <div class="empty-state" *ngIf="solicitudesFiltradas.length === 0">
+    <ion-icon name="document-outline" class="empty-icon"></ion-icon>
+    <p>Sin solicitudes en esta categoría</p>
+  </div>
+
 </ion-content>
