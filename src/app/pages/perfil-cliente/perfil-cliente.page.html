@@ -1,13 +1,150 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>perfil-cliente</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="perfil-content">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">perfil-cliente</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- HEADER -->
+  <div class="top-bar">
+    <h2 class="top-titulo">Mi perfil</h2>
+  </div>
+
+  <!-- AVATAR Y NOMBRE -->
+  <div class="perfil-hero">
+    <div class="avatar-grande">{{ iniciales }}</div>
+    <h2 class="perfil-nombre">{{ form.nombre }}</h2>
+    <p class="perfil-email">{{ form.email }}</p>
+    <span class="perfil-badge">Cliente</span>
+  </div>
+
+  <!-- FORMULARIO -->
+  <div class="form-wrap" *ngIf="!editando">
+
+    <div class="info-seccion">
+      <p class="seccion-titulo">Información personal</p>
+
+      <div class="info-fila">
+        <ion-icon name="person-outline" class="info-icon"></ion-icon>
+        <div class="info-data">
+          <p class="info-label">Nombre completo</p>
+          <p class="info-valor">{{ form.nombre }}</p>
+        </div>
+      </div>
+
+      <div class="info-fila">
+        <ion-icon name="mail-outline" class="info-icon"></ion-icon>
+        <div class="info-data">
+          <p class="info-label">Correo electrónico</p>
+          <p class="info-valor">{{ form.email }}</p>
+        </div>
+      </div>
+
+      <div class="info-fila">
+        <ion-icon name="call-outline" class="info-icon"></ion-icon>
+        <div class="info-data">
+          <p class="info-label">Teléfono</p>
+          <p class="info-valor">{{ form.telefono || 'No ingresado' }}</p>
+        </div>
+      </div>
+
+      <div class="info-fila">
+        <ion-icon name="location-outline" class="info-icon"></ion-icon>
+        <div class="info-data">
+          <p class="info-label">Comuna</p>
+          <p class="info-valor">{{ form.comuna || 'No ingresada' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-editar" (click)="activarEdicion()">
+      <ion-icon name="create-outline"></ion-icon>
+      Editar perfil
+    </button>
+
+  </div>
+
+  <!-- MODO EDICIÓN -->
+  <div class="form-wrap" *ngIf="editando">
+
+    <p class="seccion-titulo">Editar información</p>
+
+    <div class="campo">
+      <label class="campo-label">Nombre completo</label>
+      <div class="input-wrap">
+        <ion-icon name="person-outline" class="input-icon"></ion-icon>
+        <input
+          type="text"
+          [(ngModel)]="form.nombre"
+          name="nombre"
+          class="input-field"
+          placeholder="Tu nombre" />
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="campo-label">Correo electrónico</label>
+      <div class="input-wrap">
+        <ion-icon name="mail-outline" class="input-icon"></ion-icon>
+        <input
+          type="email"
+          [(ngModel)]="form.email"
+          name="email"
+          class="input-field"
+          placeholder="correo@ejemplo.cl" />
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="campo-label">Teléfono</label>
+      <div class="input-wrap">
+        <ion-icon name="call-outline" class="input-icon"></ion-icon>
+        <input
+          type="tel"
+          [(ngModel)]="form.telefono"
+          name="telefono"
+          class="input-field"
+          placeholder="+56 9 1234 5678" />
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="campo-label">Comuna</label>
+      <div class="input-wrap">
+        <ion-icon name="location-outline" class="input-icon"></ion-icon>
+        <input
+          type="text"
+          [(ngModel)]="form.comuna"
+          name="comuna"
+          class="input-field"
+          placeholder="Tu comuna" />
+      </div>
+    </div>
+
+    <div class="btns-edicion">
+      <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+      <button class="btn-guardar" (click)="guardar()">
+        <ion-spinner *ngIf="isLoading" name="crescent" class="spinner"></ion-spinner>
+        <span *ngIf="!isLoading">Guardar</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- HISTORIAL -->
+  <div class="historial-wrap">
+    <p class="seccion-titulo">Historial de servicios</p>
+
+    <div class="historial-card" *ngFor="let h of historial">
+      <div class="hist-info">
+        <p class="hist-servicio">{{ h.servicio }}</p>
+        <p class="hist-maestro">{{ h.maestro }}</p>
+        <p class="hist-fecha">{{ h.fecha }}</p>
+      </div>
+      <div class="hist-rating">
+        <span class="estrella">★</span>
+        <span>{{ h.rating }}</span>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="historial.length === 0">
+      <p>Aún no tienes servicios contratados.</p>
+    </div>
+  </div>
+
 </ion-content>

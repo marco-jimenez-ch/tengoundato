@@ -1,13 +1,101 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>home-maestro</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="home-content">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home-maestro</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- HEADER -->
+  <div class="top-bar">
+    <div class="greeting">
+      <p class="saludo">Panel de trabajo 🔧</p>
+      <h2 class="nombre">{{ nombreUsuario }}</h2>
+    </div>
+    <div class="avatar" (click)="irAPerfil()">
+      <span>{{ iniciales }}</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-wrap">
+    <div class="stat-card">
+      <p class="stat-num">{{ solicitudesPendientes }}</p>
+      <p class="stat-label">Pendientes</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-num">{{ trabajosCompletados }}</p>
+      <p class="stat-label">Completados</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-num">★ {{ rating }}</p>
+      <p class="stat-label">Calificación</p>
+    </div>
+  </div>
+
+  <!-- DISPONIBILIDAD -->
+  <div class="disponibilidad-wrap">
+    <div class="disp-info">
+      <p class="disp-titulo">Estado</p>
+      <p class="disp-sub">{{ disponible ? 'Visible para clientes' : 'No visible para clientes' }}</p>
+    </div>
+    <div class="toggle-wrap" [class.activo]="disponible" (click)="toggleDisponible()">
+      <div class="toggle-thumb"></div>
+    </div>
+  </div>
+
+  <!-- SOLICITUDES NUEVAS -->
+  <div class="section-title">Solicitudes nuevas</div>
+
+  <div class="solicitudes-wrap" *ngIf="solicitudesNuevas.length > 0">
+    <div class="solicitud-card" *ngFor="let sol of solicitudesNuevas">
+      <div class="sol-header">
+        <div class="sol-avatar">{{ sol.iniciales }}</div>
+        <div class="sol-info">
+          <p class="sol-cliente">{{ sol.cliente }}</p>
+          <p class="sol-servicio">{{ sol.servicio }}</p>
+        </div>
+        <span class="sol-badge nueva">Nueva</span>
+      </div>
+      <p class="sol-descripcion">{{ sol.descripcion }}</p>
+      <div class="sol-meta">
+        <span class="sol-meta-item">
+          <ion-icon name="location-outline"></ion-icon> {{ sol.comuna }}
+        </span>
+        <span class="sol-meta-item">
+          <ion-icon name="cash-outline"></ion-icon> ${{ sol.presupuesto | number }}
+        </span>
+      </div>
+      <div class="sol-acciones">
+        <button class="btn-rechazar" (click)="rechazar(sol)">Rechazar</button>
+        <button class="btn-aceptar" (click)="aceptar(sol)">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="solicitudesNuevas.length === 0">
+    <ion-icon name="checkmark-circle-outline" class="empty-icon"></ion-icon>
+    <p>No tienes solicitudes nuevas por ahora.</p>
+  </div>
+
+  <!-- TRABAJOS EN CURSO -->
+  <div class="section-title" *ngIf="trabajosEnCurso.length > 0">En curso</div>
+  <div class="solicitudes-wrap" *ngIf="trabajosEnCurso.length > 0">
+    <div class="solicitud-card en-curso" *ngFor="let t of trabajosEnCurso">
+      <div class="sol-header">
+        <div class="sol-avatar">{{ t.iniciales }}</div>
+        <div class="sol-info">
+          <p class="sol-cliente">{{ t.cliente }}</p>
+          <p class="sol-servicio">{{ t.servicio }}</p>
+        </div>
+        <span class="sol-badge en-curso-badge">En curso</span>
+      </div>
+      <div class="sol-meta">
+        <span class="sol-meta-item">
+          <ion-icon name="location-outline"></ion-icon> {{ t.comuna }}
+        </span>
+        <span class="sol-meta-item">
+          <ion-icon name="cash-outline"></ion-icon> ${{ t.presupuesto | number }}
+        </span>
+      </div>
+      <div class="sol-acciones">
+        <button class="btn-aceptar full" (click)="completar(t)">Marcar como completado</button>
+      </div>
+    </div>
+  </div>
+
 </ion-content>

@@ -1,0 +1,279 @@
+:host {
+  --tud-gold: #E6A817;
+  --tud-dark: #1a1a2e;
+}
+
+.perfil-content {
+  --background: #f5f5f5;
+}
+
+/* ── TOP BAR ── */
+.top-bar {
+  background: var(--tud-dark);
+  padding: 56px 20px 0;
+}
+
+.top-titulo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+/* ── HERO ── */
+.perfil-hero {
+  background: var(--tud-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px 32px;
+  gap: 8px;
+}
+
+.avatar-grande {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--tud-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.perfil-nombre {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.perfil-email {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  margin: 0;
+}
+
+.perfil-badge {
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(230,168,23,0.2);
+  color: var(--tud-gold);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-top: 4px;
+}
+
+/* ── FORM / INFO ── */
+.form-wrap {
+  background: #fff;
+  margin: 16px 20px 0;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.seccion-titulo {
+  font-size: 13px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* ── INFO FILAS ── */
+.info-fila {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid #f0f0f0;
+
+  &:last-of-type { border-bottom: none; }
+}
+
+.info-icon {
+  font-size: 20px;
+  color: var(--tud-gold);
+  flex-shrink: 0;
+}
+
+.info-label {
+  font-size: 11px;
+  color: #aaa;
+  margin: 0 0 2px;
+}
+
+.info-valor {
+  font-size: 14px;
+  color: var(--tud-dark);
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ── CAMPOS EDICIÓN ── */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tud-dark);
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  background: #f8f8f8;
+  border-radius: 12px;
+  border: 1.5px solid #e0e0e0;
+  padding: 0 14px;
+
+  &:focus-within { border-color: var(--tud-gold); }
+}
+
+.input-icon {
+  font-size: 18px;
+  color: #aaa;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--tud-dark);
+  padding: 14px 0;
+
+  &::placeholder { color: #bbb; }
+}
+
+/* ── BOTONES ── */
+.btn-editar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  background: var(--tud-gold);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+
+  ion-icon { font-size: 18px; }
+}
+
+.btns-edicion {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-cancelar {
+  flex: 1;
+  padding: 14px;
+  background: transparent;
+  border: 1.5px solid #ddd;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #888;
+  cursor: pointer;
+}
+
+.btn-guardar {
+  flex: 1;
+  padding: 14px;
+  background: var(--tud-gold);
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  --color: #fff;
+  width: 18px;
+  height: 18px;
+}
+
+/* ── HISTORIAL ── */
+.historial-wrap {
+  margin: 16px 20px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 100px;
+}
+
+.historial-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 0.5px solid #f0f0f0;
+
+  &:last-of-type { border-bottom: none; }
+}
+
+.hist-servicio {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tud-dark);
+  margin: 0 0 2px;
+}
+
+.hist-maestro {
+  font-size: 12px;
+  color: #888;
+  margin: 0 0 2px;
+}
+
+.hist-fecha {
+  font-size: 11px;
+  color: #bbb;
+  margin: 0;
+}
+
+.hist-rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tud-dark);
+}
+
+.estrella { color: var(--tud-gold); }
+
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #bbb;
+  font-size: 14px;
+}

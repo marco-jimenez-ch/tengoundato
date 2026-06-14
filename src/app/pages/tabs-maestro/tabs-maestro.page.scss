@@ -1,0 +1,21 @@
+:host {
+  --tud-gold: #E6A817;
+  --tud-dark: #1a1a2e;
+}
+
+.tud-tab-bar {
+  --background: var(--tud-dark);
+  --color: rgba(255, 255, 255, 0.45);
+  --color-selected: var(--tud-gold);
+  border-top: none;
+  height: 60px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+ion-tab-button {
+  --color: rgba(255, 255, 255, 0.45);
+  --color-selected: var(--tud-gold);
+
+  ion-icon { font-size: 22px; }
+  ion-label { font-size: 11px; font-weight: 600; }
+}

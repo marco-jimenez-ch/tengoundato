@@ -1,0 +1,268 @@
+:host {
+  --tud-gold: #E6A817;
+  --tud-dark: #1a1a2e;
+}
+
+.home-content {
+  --background: #f5f5f5;
+}
+
+/* ── TOP BAR ── */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 56px 20px 20px;
+  background: var(--tud-dark);
+}
+
+.saludo {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin: 0 0 2px;
+}
+
+.nombre {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--tud-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ── STATS ── */
+.stats-wrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 20px 20px 0;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.stat-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--tud-dark);
+  margin: 0 0 4px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #999;
+  margin: 0;
+}
+
+/* ── DISPONIBILIDAD ── */
+.disponibilidad-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  margin: 16px 20px 0;
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.disp-titulo {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tud-dark);
+  margin: 0 0 2px;
+}
+
+.disp-sub {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}
+
+.toggle-wrap {
+  width: 48px;
+  height: 26px;
+  background: #ddd;
+  border-radius: 13px;
+  padding: 3px;
+  cursor: pointer;
+  transition: background 0.25s;
+  position: relative;
+
+  &.activo {
+    background: var(--tud-gold);
+
+    .toggle-thumb {
+      transform: translateX(22px);
+    }
+  }
+}
+
+.toggle-thumb {
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.25s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+/* ── SECCIÓN TÍTULOS ── */
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--tud-dark);
+  padding: 20px 20px 10px;
+}
+
+/* ── SOLICITUDES ── */
+.solicitudes-wrap {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 20px;
+}
+
+.solicitud-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+  &.en-curso {
+    border-left: 4px solid var(--tud-gold);
+  }
+}
+
+.sol-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.sol-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--tud-dark);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.sol-info { flex: 1; }
+
+.sol-cliente {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tud-dark);
+  margin: 0 0 2px;
+}
+
+.sol-servicio {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}
+
+.sol-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+
+  &.nueva         { background: #cfe2ff; color: #084298; }
+  &.en-curso-badge { background: #fff3cd; color: #856404; }
+}
+
+.sol-descripcion {
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+
+.sol-meta {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.sol-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #888;
+
+  ion-icon { font-size: 14px; }
+}
+
+.sol-acciones {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-rechazar {
+  flex: 1;
+  padding: 10px;
+  border: 1.5px solid #ddd;
+  background: transparent;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #888;
+  cursor: pointer;
+}
+
+.btn-aceptar {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: var(--tud-gold);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+
+  &.full { flex: unset; width: 100%; }
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #bbb;
+
+  p { font-size: 14px; margin: 8px 0 0; }
+}
+
+.empty-icon {
+  font-size: 48px;
+  color: #ddd;
+}

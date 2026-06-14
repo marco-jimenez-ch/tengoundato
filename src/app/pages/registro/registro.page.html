@@ -1,13 +1,170 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>registro</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="registro-content">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">registro</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- HEADER -->
+  <div class="top-bar">
+    <div class="back-btn" (click)="volver()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </div>
+    <div class="top-logo">
+      <span class="logo-tengo">Tengo</span><span class="logo-un">Un</span><span class="logo-dato">Dato</span>
+    </div>
+    <div style="width:36px"></div>
+  </div>
+
+  <!-- TÍTULO -->
+  <div class="titulo-wrap">
+    <h1 class="titulo">Crear cuenta</h1>
+    <p class="subtitulo">Únete y encuentra el profesional que necesitas</p>
+  </div>
+
+  <!-- SELECTOR ROL -->
+  <div class="rol-selector">
+    <div class="rol-chip" [class.activo]="rol === 'cliente'" (click)="rol = 'cliente'">
+      <span>👤</span> Soy cliente
+    </div>
+    <div class="rol-chip" [class.activo]="rol === 'maestro'" (click)="rol = 'maestro'">
+      <span>🔧</span> Soy maestro
+    </div>
+  </div>
+
+  <!-- FORMULARIO -->
+  <form class="form-wrap" (ngSubmit)="onSubmit()">
+
+    <!-- Nombre -->
+    <div class="campo">
+      <label class="campo-label">Nombre completo</label>
+      <div class="input-wrap" [class.error]="campoTocado('nombre') && form.nombre === ''">
+        <ion-icon name="person-outline" class="input-icon"></ion-icon>
+        <input
+          type="text"
+          placeholder="Juan Pérez"
+          [(ngModel)]="form.nombre"
+          name="nombre"
+          (blur)="tocar('nombre')"
+          class="input-field" />
+      </div>
+      <span class="error-msg" *ngIf="campoTocado('nombre') && form.nombre === ''">
+        El nombre es obligatorio.
+      </span>
+    </div>
+
+    <!-- Email -->
+    <div class="campo">
+      <label class="campo-label">Correo electrónico</label>
+      <div class="input-wrap" [class.error]="campoTocado('email') && !emailValido()">
+        <ion-icon name="mail-outline" class="input-icon"></ion-icon>
+        <input
+          type="email"
+          placeholder="correo@ejemplo.cl"
+          [(ngModel)]="form.email"
+          name="email"
+          (blur)="tocar('email')"
+          class="input-field" />
+      </div>
+      <span class="error-msg" *ngIf="campoTocado('email') && !emailValido()">
+        Ingresa un correo válido.
+      </span>
+    </div>
+
+    <!-- Teléfono -->
+    <div class="campo">
+      <label class="campo-label">Teléfono</label>
+      <div class="input-wrap" [class.error]="campoTocado('telefono') && form.telefono === ''">
+        <ion-icon name="call-outline" class="input-icon"></ion-icon>
+        <input
+          type="tel"
+          placeholder="+56 9 1234 5678"
+          [(ngModel)]="form.telefono"
+          name="telefono"
+          (blur)="tocar('telefono')"
+          class="input-field" />
+      </div>
+      <span class="error-msg" *ngIf="campoTocado('telefono') && form.telefono === ''">
+        El teléfono es obligatorio.
+      </span>
+    </div>
+
+    <!-- Oficio (solo maestro) -->
+    <div class="campo" *ngIf="rol === 'maestro'">
+      <label class="campo-label">Oficio</label>
+      <div class="input-wrap">
+        <ion-icon name="construct-outline" class="input-icon"></ion-icon>
+        <select [(ngModel)]="form.oficio" name="oficio" class="input-field select-field">
+          <option value="" disabled>Selecciona tu oficio</option>
+          <option value="electricista">Electricista</option>
+          <option value="gasfiter">Gasfiter</option>
+          <option value="pintor">Pintor</option>
+          <option value="carpintero">Carpintero</option>
+          <option value="jardinero">Jardinero</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="campo">
+      <label class="campo-label">Contraseña</label>
+      <div class="input-wrap" [class.error]="campoTocado('password') && form.password.length < 6">
+        <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Mínimo 6 caracteres"
+          [(ngModel)]="form.password"
+          name="password"
+          (blur)="tocar('password')"
+          class="input-field" />
+        <ion-icon
+          [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+          class="input-icon-right"
+          (click)="showPassword = !showPassword">
+        </ion-icon>
+      </div>
+      <span class="error-msg" *ngIf="campoTocado('password') && form.password.length < 6">
+        Mínimo 6 caracteres.
+      </span>
+    </div>
+
+    <!-- Confirmar contraseña -->
+    <div class="campo">
+      <label class="campo-label">Confirmar contraseña</label>
+      <div class="input-wrap" [class.error]="campoTocado('confirmar') && form.password !== form.confirmar">
+        <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+        <input
+          [type]="showConfirmar ? 'text' : 'password'"
+          placeholder="Repite tu contraseña"
+          [(ngModel)]="form.confirmar"
+          name="confirmar"
+          (blur)="tocar('confirmar')"
+          class="input-field" />
+        <ion-icon
+          [name]="showConfirmar ? 'eye-off-outline' : 'eye-outline'"
+          class="input-icon-right"
+          (click)="showConfirmar = !showConfirmar">
+        </ion-icon>
+      </div>
+      <span class="error-msg" *ngIf="campoTocado('confirmar') && form.password !== form.confirmar">
+        Las contraseñas no coinciden.
+      </span>
+    </div>
+
+    <!-- Error global -->
+    <div class="error-global" *ngIf="errorMsg !== ''">
+      <ion-icon name="warning-outline"></ion-icon>
+      {{ errorMsg }}
+    </div>
+
+    <!-- Botón registrar -->
+    <button type="submit" class="btn-registrar" [disabled]="isLoading">
+      <ion-spinner *ngIf="isLoading" name="crescent" class="spinner"></ion-spinner>
+      <span *ngIf="!isLoading">Crear cuenta</span>
+    </button>
+
+    <!-- Login -->
+    <p class="ir-login">
+      ¿Ya tienes cuenta?
+      <span class="link-gold" (click)="irALogin()">Inicia sesión</span>
+    </p>
+
+  </form>
+
 </ion-content>

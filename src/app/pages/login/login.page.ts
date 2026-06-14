@@ -90,7 +90,7 @@ export class LoginPage implements OnInit {
     localStorage.setItem('tud_email', user.email);
 
     // Navegar según rol
-    const destino = user.role === 'maestro' ? '/home-maestro' : '/home-cliente';
+    const destino = user.role === 'maestro' ? '/maestro' : '/cliente';
     this.router.navigateByUrl(destino, { replaceUrl: true });
   }
 

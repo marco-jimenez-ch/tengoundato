@@ -1,0 +1,27 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom" class="tud-tab-bar">
+
+    <ion-tab-button tab="home" href="/maestro/home">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Inicio</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="solicitudes" href="/maestro/solicitudes">
+      <ion-icon name="list-outline"></ion-icon>
+      <ion-label>Solicitudes</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="perfil" href="/maestro/perfil">
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="cerrarSesion()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      <ion-label>Salir</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+
+</ion-tabs>

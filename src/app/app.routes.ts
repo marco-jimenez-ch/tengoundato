@@ -24,48 +24,81 @@ export const routes: Routes = [
       import('./pages/registro/registro.page')
         .then(m => m.RegistroPage)
   },
+
+  // ── TABS CLIENTE ──────────────────────────────────────────────────────────
   {
-    path: 'home-cliente',
+    path: 'cliente',
     loadComponent: () =>
-      import('./pages/home-cliente/home-cliente.page')
-        .then(m => m.HomeClientePage)
+      import('./pages/tabs-cliente/tabs-cliente.page')
+        .then(m => m.TabsClientePage),
+    children: [
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./pages/home-cliente/home-cliente.page')
+            .then(m => m.HomeClientePage)
+      },
+      {
+        path: 'listado',
+        loadComponent: () =>
+          import('./pages/listado/listado.page')
+            .then(m => m.ListadoPage)
+      },
+      {
+        path: 'perfil',
+        loadComponent: () =>
+          import('./pages/perfil-cliente/perfil-cliente.page')
+            .then(m => m.PerfilClientePage)
+      },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      }
+    ]
   },
+
+  // ── TABS MAESTRO ──────────────────────────────────────────────────────────
   {
-    path: 'listado',
+    path: 'maestro',
     loadComponent: () =>
-      import('./pages/listado/listado.page')
-        .then(m => m.ListadoPage)
+      import('./pages/tabs-maestro/tabs-maestro.page')
+        .then(m => m.TabsMaestroPage),
+    children: [
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./pages/home-maestro/home-maestro.page')
+            .then(m => m.HomeMaestroPage)
+      },
+      {
+        path: 'solicitudes',
+        loadComponent: () =>
+          import('./pages/solicitudes-maestro/solicitudes-maestro.page')
+            .then(m => m.SolicitudesMaestroPage)
+      },
+      {
+        path: 'perfil',
+        loadComponent: () =>
+          import('./pages/perfil-maestro/perfil-maestro.page')
+            .then(m => m.PerfilMaestroPage)
+      },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      }
+    ]
   },
+
+  // ── PÁGINAS INDEPENDIENTES ────────────────────────────────────────────────
   {
     path: 'detalle-maestro/:id',
     loadComponent: () =>
       import('./pages/detalle-maestro/detalle-maestro.page')
         .then(m => m.DetalleMaestroPage)
   },
-  {
-    path: 'perfil-cliente',
-    loadComponent: () =>
-      import('./pages/perfil-cliente/perfil-cliente.page')
-        .then(m => m.PerfilClientePage)
-  },
-  {
-    path: 'home-maestro',
-    loadComponent: () =>
-      import('./pages/home-maestro/home-maestro.page')
-        .then(m => m.HomeMaestroPage)
-  },
-  {
-    path: 'solicitudes-maestro',
-    loadComponent: () =>
-      import('./pages/solicitudes-maestro/solicitudes-maestro.page')
-        .then(m => m.SolicitudesMaestroPage)
-  },
-  {
-    path: 'perfil-maestro',
-    loadComponent: () =>
-      import('./pages/perfil-maestro/perfil-maestro.page')
-        .then(m => m.PerfilMaestroPage)
-  },
+
   {
     path: '**',
     redirectTo: 'onboarding'

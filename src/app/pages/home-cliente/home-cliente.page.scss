@@ -1,0 +1,241 @@
+:host {
+  --tud-gold: #E6A817;
+  --tud-dark: #1a1a2e;
+}
+
+.home-content {
+  --background: #f5f5f5;
+}
+
+/* ── TOP BAR ── */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 56px 20px 16px;
+  background: var(--tud-dark);
+}
+
+.saludo {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin: 0 0 2px;
+}
+
+.nombre {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--tud-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ── BUSCADOR ── */
+.search-wrap {
+  background: var(--tud-dark);
+  padding: 0 12px 16px;
+}
+
+.tud-search {
+  --background: rgba(255,255,255,0.12);
+  --color: #fff;
+  --placeholder-color: rgba(255,255,255,0.5);
+  --icon-color: rgba(255,255,255,0.5);
+  --border-radius: 12px;
+  --box-shadow: none;
+}
+
+/* ── SECCIÓN TÍTULOS ── */
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--tud-dark);
+  padding: 20px 20px 10px;
+}
+
+/* ── CATEGORÍAS ── */
+.categorias-scroll {
+  display: flex;
+  gap: 10px;
+  padding: 0 20px 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar { display: none; }
+}
+
+.categoria-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 64px;
+  padding: 10px 8px;
+  background: #fff;
+  border-radius: 14px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+
+  &.activa {
+    border-color: var(--tud-gold);
+    background: #fff8ec;
+  }
+}
+
+.cat-icon { font-size: 22px; }
+.cat-label { font-size: 11px; color: #555; font-weight: 500; white-space: nowrap; }
+
+/* ── SOLICITUDES ACTIVAS ── */
+.solicitudes-wrap {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.solicitud-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.sol-servicio {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tud-dark);
+  margin: 0 0 2px;
+}
+
+.sol-maestro {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+}
+
+.sol-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+
+  &.en-curso    { background: #fff3cd; color: #856404; }
+  &.completado  { background: #d1e7dd; color: #0f5132; }
+  &.pendiente   { background: #cfe2ff; color: #084298; }
+}
+
+/* ── MAESTROS ── */
+.maestros-wrap {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 100px;
+}
+
+.maestro-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform 0.15s;
+
+  &:active { transform: scale(0.98); }
+}
+
+.maestro-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--tud-dark);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.maestro-info { flex: 1; }
+
+.maestro-nombre {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tud-dark);
+  margin: 0 0 2px;
+}
+
+.maestro-oficio {
+  font-size: 12px;
+  color: #888;
+  margin: 0 0 4px;
+}
+
+.maestro-rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.estrella    { color: var(--tud-gold); font-size: 13px; }
+.rating-num  { font-size: 13px; font-weight: 600; color: var(--tud-dark); }
+.rating-total { font-size: 12px; color: #aaa; }
+
+.maestro-precio { text-align: right; }
+
+.precio {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--tud-gold);
+  margin: 0;
+}
+
+.precio-label {
+  font-size: 11px;
+  color: #aaa;
+  margin: 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* ── FAB ── */
+.fab-wrap {
+  position: fixed;
+  bottom: 28px;
+  right: 24px;
+  z-index: 100;
+}
+
+.fab-tud {
+  --background: var(--tud-gold);
+  --background-activated: #c8920f;
+  --color: #fff;
+  --box-shadow: 0 4px 16px rgba(230,168,23,0.4);
+}

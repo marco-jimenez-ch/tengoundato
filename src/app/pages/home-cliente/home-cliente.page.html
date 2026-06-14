@@ -1,13 +1,86 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>home-cliente</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="home-content">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home-cliente</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- HEADER -->
+  <div class="top-bar">
+    <div class="greeting">
+      <p class="saludo">Hola 👋</p>
+      <h2 class="nombre">{{ nombreUsuario }}</h2>
+    </div>
+    <div class="avatar" (click)="irAPerfil()">
+      <span>{{ iniciales }}</span>
+    </div>
+  </div>
+
+  <!-- BUSCADOR -->
+  <div class="search-wrap">
+    <ion-searchbar
+      placeholder="¿Qué servicio necesitas?"
+      [(ngModel)]="busqueda"
+      (ionInput)="filtrarServicios()"
+      class="tud-search">
+    </ion-searchbar>
+  </div>
+
+  <!-- CATEGORÍAS -->
+  <div class="section-title">Categorías</div>
+  <div class="categorias-scroll">
+    <div
+      class="categoria-chip"
+      *ngFor="let cat of categorias"
+      [class.activa]="categoriaActiva === cat.id"
+      (click)="seleccionarCategoria(cat.id)">
+      <span class="cat-icon">{{ cat.icono }}</span>
+      <span class="cat-label">{{ cat.nombre }}</span>
+    </div>
+  </div>
+
+  <!-- SOLICITUDES ACTIVAS -->
+  <div class="section-title" *ngIf="solicitudesActivas.length > 0">
+    Mis solicitudes activas
+  </div>
+  <div class="solicitudes-wrap" *ngIf="solicitudesActivas.length > 0">
+    <div class="solicitud-card" *ngFor="let sol of solicitudesActivas">
+      <div class="sol-info">
+        <p class="sol-servicio">{{ sol.servicio }}</p>
+        <p class="sol-maestro">{{ sol.maestro }}</p>
+      </div>
+      <span class="sol-badge" [ngClass]="sol.estado">{{ sol.estadoTexto }}</span>
+    </div>
+  </div>
+
+  <!-- MAESTROS DISPONIBLES -->
+  <div class="section-title">Maestros disponibles</div>
+  <div class="maestros-wrap">
+    <div
+      class="maestro-card"
+      *ngFor="let m of maestrosFiltrados"
+      (click)="verMaestro(m)">
+      <div class="maestro-avatar">{{ m.iniciales }}</div>
+      <div class="maestro-info">
+        <p class="maestro-nombre">{{ m.nombre }}</p>
+        <p class="maestro-oficio">{{ m.oficio }}</p>
+        <div class="maestro-rating">
+          <span class="estrella">★</span>
+          <span class="rating-num">{{ m.rating }}</span>
+          <span class="rating-total">({{ m.reviews }})</span>
+        </div>
+      </div>
+      <div class="maestro-precio">
+        <p class="precio">${{ m.precio | number }}</p>
+        <p class="precio-label">/hora</p>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="maestrosFiltrados.length === 0">
+      <p>No se encontraron maestros para tu búsqueda.</p>
+    </div>
+  </div>
+
+  <!-- BOTÓN NUEVA SOLICITUD -->
+  <div class="fab-wrap">
+    <ion-fab-button class="fab-tud" (click)="nuevaSolicitud()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </div>
+
 </ion-content>
