@@ -7,12 +7,8 @@ import {
   IonSpinner,
   ToastController,
 } from '@ionic/angular/standalone';
-
-// ── Credenciales mock ────────────────────────────────────────────────────────
-const MOCK_USERS = [
-  { email: 'cliente@tud.cl',  password: '123456', role: 'cliente'  },
-  { email: 'maestro@tud.cl',  password: '123456', role: 'maestro'  },
-];
+import { DbTaskService } from '../../services/db-task';
+import { StorageService } from '../../services/storage';
 
 @Component({
   selector: 'app-login',
@@ -37,6 +33,8 @@ export class LoginPage implements OnInit {
     private fb:      FormBuilder,
     private router:  Router,
     private toast:   ToastController,
+    private dbTask:  DbTaskService,
+    private storage: StorageService,
   ) {}
 
   ngOnInit(): void {
@@ -44,9 +42,19 @@ export class LoginPage implements OnInit {
       email:    ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+
+    this.dbTask.dbState().subscribe(async (ready) => {
+      if (ready) {
+        const sesion = await this.dbTask.obtenerSesionActiva();
+        if (sesion) {
+          const role    = await this.storage.get('tud_role');
+          const destino = role === 'maestro' ? '/maestro' : '/cliente';
+          this.router.navigateByUrl(destino, { replaceUrl: true });
+        }
+      }
+    });
   }
 
-  // ── Getters convenientes para el template ───────────────────────────────
   get email()    { return this.loginForm.get('email')!;    }
   get password() { return this.loginForm.get('password')!; }
 
@@ -57,12 +65,11 @@ export class LoginPage implements OnInit {
   }
 
   get passwordError(): string {
-    if (this.password.touched && this.password.hasError('required'))   return 'La contraseña es obligatoria.';
-    if (this.password.touched && this.password.hasError('minlength'))  return 'Mínimo 6 caracteres.';
+    if (this.password.touched && this.password.hasError('required'))  return 'La contraseña es obligatoria.';
+    if (this.password.touched && this.password.hasError('minlength')) return 'Mínimo 6 caracteres.';
     return '';
   }
 
-  // ── Submit ────────────────────────────────────────────────────────────────
   async onSubmit(): Promise<void> {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.invalid) return;
@@ -70,12 +77,11 @@ export class LoginPage implements OnInit {
     this.isLoading = true;
     this.errorMsg  = '';
 
-    // Simula latencia de red
-    await this.delay(900);
-
     const { email, password } = this.loginForm.value;
-    const user = MOCK_USERS.find(
-      u => u.email === email.trim().toLowerCase() && u.password === password
+
+    const user = await this.dbTask.validarUsuario(
+      email.trim().toLowerCase(),
+      password
     );
 
     this.isLoading = false;
@@ -85,25 +91,34 @@ export class LoginPage implements OnInit {
       return;
     }
 
-    // Persistir sesión básica
-    localStorage.setItem('tud_role',  user.role);
-    localStorage.setItem('tud_email', user.email);
+    await this.dbTask.actualizarEstadoSesion(user.user_name, 1);
 
-    // Navegar según rol
-    const destino = user.role === 'maestro' ? '/maestro' : '/cliente';
+    await this.storage.set('tud_user',  user.user_name);
+    await this.storage.set('tud_email', user.user_name);
+
+    const role = user.user_name.includes('maestro') ? 'maestro' : 'cliente';
+    await this.storage.set('tud_role', role);
+    localStorage.setItem('tud_role',  role);
+    localStorage.setItem('tud_email', user.user_name);
+
+    const destino = role === 'maestro' ? '/maestro' : '/cliente';
     this.router.navigateByUrl(destino, { replaceUrl: true });
   }
 
-  // ── Navegación ────────────────────────────────────────────────────────────
-  irARegistro():      void { this.router.navigateByUrl('/registro'); }
-  irARecuperacion():  void { this.showToast('Función disponible próximamente 🔧'); }
-  irAGoogle():        void { this.showToast('Login con Google próximamente 🔧'); }
+  irARegistro(): void {
+    this.router.navigateByUrl('/registro');
+  }
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
-  togglePassword(): void { this.showPassword = !this.showPassword; }
+  irARecuperacion(): void {
+    this.showToast('Función disponible próximamente 🔧');
+  }
 
-  private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  irAGoogle(): void {
+    this.showToast('Login con Google próximamente 🔧');
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
 
   private async showToast(msg: string): Promise<void> {

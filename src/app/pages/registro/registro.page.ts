@@ -20,6 +20,8 @@ import {
   eyeOffOutline,
   warningOutline,
 } from 'ionicons/icons';
+import { DbTaskService } from '../../services/db-task';
+import { StorageService } from '../../services/storage';
 
 @Component({
   selector: 'app-registro',
@@ -54,8 +56,10 @@ export class RegistroPage implements OnInit {
   errorMsg      = '';
 
   constructor(
-    private router: Router,
-    private toast:  ToastController,
+    private router:  Router,
+    private toast:   ToastController,
+    private dbTask:  DbTaskService,
+    private storage: StorageService,
   ) {
     addIcons({
       arrowBackOutline,
@@ -85,17 +89,16 @@ export class RegistroPage implements OnInit {
   }
 
   formularioValido(): boolean {
-    if (!this.form.nombre.trim())         return false;
-    if (!this.emailValido())              return false;
-    if (!this.form.telefono.trim())       return false;
-    if (this.form.password.length < 6)    return false;
-    if (this.form.password !== this.form.confirmar) return false;
-    if (this.rol === 'maestro' && !this.form.oficio) return false;
+    if (!this.form.nombre.trim())                                return false;
+    if (!this.emailValido())                                     return false;
+    if (!this.form.telefono.trim())                              return false;
+    if (this.form.password.length < 6)                          return false;
+    if (this.form.password !== this.form.confirmar)              return false;
+    if (this.rol === 'maestro' && !this.form.oficio)             return false;
     return true;
   }
 
   async onSubmit(): Promise<void> {
-    // Marcar todos los campos como tocados
     ['nombre', 'email', 'telefono', 'password', 'confirmar'].forEach(c => this.tocar(c));
     if (this.rol === 'maestro') this.tocar('oficio');
 
@@ -107,12 +110,31 @@ export class RegistroPage implements OnInit {
     }
 
     this.isLoading = true;
-    await this.delay(1000);
+
+    // Registrar sesión en SQLite
+    const registrado = await this.dbTask.registrarSesion(
+      this.form.email.trim().toLowerCase(),
+      this.form.password
+    );
+
     this.isLoading = false;
 
-    // Guardar sesión mock
-    localStorage.setItem('tud_role',  this.rol);
-    localStorage.setItem('tud_email', this.form.email);
+    if (!registrado) {
+      this.errorMsg = 'Error al crear la cuenta. Intenta nuevamente.';
+      return;
+    }
+
+    // Guardar datos en Ionic Storage
+    await this.storage.set('tud_user',     this.form.email.trim().toLowerCase());
+    await this.storage.set('tud_email',    this.form.email.trim().toLowerCase());
+    await this.storage.set('tud_nombre',   this.form.nombre);
+    await this.storage.set('tud_telefono', this.form.telefono);
+    await this.storage.set('tud_oficio',   this.form.oficio);
+    await this.storage.set('tud_role',     this.rol);
+
+    // Guardar en localStorage para guards
+    localStorage.setItem('tud_role',   this.rol);
+    localStorage.setItem('tud_email',  this.form.email.trim().toLowerCase());
     localStorage.setItem('tud_nombre', this.form.nombre);
 
     const t = await this.toast.create({
@@ -123,7 +145,7 @@ export class RegistroPage implements OnInit {
     });
     await t.present();
 
-    const destino = this.rol === 'maestro' ? '/home-maestro' : '/home-cliente';
+    const destino = this.rol === 'maestro' ? '/maestro' : '/cliente';
     this.router.navigateByUrl(destino, { replaceUrl: true });
   }
 
@@ -133,9 +155,5 @@ export class RegistroPage implements OnInit {
 
   irALogin(): void {
     this.router.navigateByUrl('/login');
-  }
-
-  private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
