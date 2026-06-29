@@ -147,6 +147,39 @@
       </span>
     </div>
 
+    <!-- Aviso de datos personales -->
+    <div class="aviso-datos">
+      <ion-icon name="shield-checkmark-outline" class="aviso-icon"></ion-icon>
+      <p class="aviso-texto">
+        Tus datos se almacenan localmente en tu dispositivo y no son compartidos
+        con terceros, conforme a la
+        <strong>Ley 19.628</strong> sobre Protección de la Vida Privada de Chile.
+      </p>
+    </div>
+
+    <!-- Checkbox términos de uso -->
+    <div class="terminos-wrap" [class.terminos-error]="terminosTocado && !aceptaTerminos">
+      <div class="terminos-row">
+        <input
+          type="checkbox"
+          id="terminos"
+          [(ngModel)]="aceptaTerminos"
+          name="aceptaTerminos"
+          class="terminos-check"
+          (change)="terminosTocado = true" />
+        <label for="terminos" class="terminos-label">
+          Acepto los
+          <span class="link-gold" (click)="verTerminos(); $event.preventDefault()">
+            Términos de Uso y Política de Privacidad
+          </span>
+          de TengoUnDato.
+        </label>
+      </div>
+      <span class="error-msg" *ngIf="terminosTocado && !aceptaTerminos">
+        Debes aceptar los términos para continuar.
+      </span>
+    </div>
+
     <!-- Error global -->
     <div class="error-global" *ngIf="errorMsg !== ''">
       <ion-icon name="warning-outline"></ion-icon>

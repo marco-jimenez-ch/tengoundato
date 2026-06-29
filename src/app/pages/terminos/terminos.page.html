@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="start" fill="clear" (click)="volver()">
+      <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-title>Términos de Uso</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="term-content">
+  <div class="term-wrap">
+
+    <p class="term-updated">Última actualización: {{ fechaActualizacion }}</p>
+
+    <!-- 1 -->
+    <div class="term-section">
+      <h2 class="term-title">1. Aceptación de los Términos</h2>
+      <p class="term-text">
+        Al crear una cuenta en TengoUnDato, el usuario acepta expresamente
+        estos Términos de Uso y la Política de Privacidad. Si no está de acuerdo
+        con alguno de estos términos, no podrá utilizar la aplicación.
+      </p>
+    </div>
+
+    <!-- 2 -->
+    <div class="term-section">
+      <h2 class="term-title">2. Descripción del Servicio</h2>
+      <p class="term-text">
+        TengoUnDato es una aplicación móvil que conecta clientes con maestros
+        de oficio (electricistas, gasfíteres, pintores, carpinteros, jardineros,
+        entre otros) para facilitar la contratación de servicios de mantención
+        y reparación del hogar.
+      </p>
+    </div>
+
+    <!-- 3 -->
+    <div class="term-section">
+      <h2 class="term-title">3. Protección de Datos Personales</h2>
+      <p class="term-text">
+        TengoUnDato trata los datos personales de sus usuarios conforme a la
+        <strong>Ley N° 19.628 sobre Protección de la Vida Privada</strong> de
+        la República de Chile y sus modificaciones vigentes.
+      </p>
+      <p class="term-text">
+        Los datos recopilados (nombre, correo electrónico, teléfono, oficio y
+        ubicación GPS) se utilizan exclusivamente para el funcionamiento de la
+        aplicación y la prestación del servicio. No son compartidos con
+        terceros sin el consentimiento explícito del titular.
+      </p>
+      <p class="term-text">
+        Los datos se almacenan localmente en el dispositivo del usuario mediante
+        SQLite e Ionic Storage. El usuario puede solicitar la eliminación de sus
+        datos cerrando sesión y desinstalando la aplicación.
+      </p>
+    </div>
+
+    <!-- 4 -->
+    <div class="term-section">
+      <h2 class="term-title">4. Uso de Geolocalización</h2>
+      <p class="term-text">
+        La aplicación solicita acceso a la ubicación GPS del dispositivo para
+        mostrar maestros cercanos al usuario. Este permiso es solicitado
+        explícitamente por el sistema operativo y puede ser revocado en
+        cualquier momento desde la configuración del dispositivo.
+      </p>
+      <p class="term-text">
+        La ubicación no es almacenada ni transmitida a servidores externos.
+      </p>
+    </div>
+
+    <!-- 5 -->
+    <div class="term-section">
+      <h2 class="term-title">5. Uso de la Cámara</h2>
+      <p class="term-text">
+        La aplicación solicita acceso a la cámara y galería de fotos del
+        dispositivo únicamente para permitir al maestro agregar una foto de
+        perfil. Las imágenes se almacenan localmente en el dispositivo y no
+        son transmitidas a servidores externos.
+      </p>
+    </div>
+
+    <!-- 6 -->
+    <div class="term-section">
+      <h2 class="term-title">6. Responsabilidades del Usuario</h2>
+      <p class="term-text">
+        El usuario se compromete a proporcionar información veraz y actualizada
+        al momento de registrarse. Queda prohibido el uso de la aplicación para
+        fines ilícitos, fraudulentos o que perjudiquen a otros usuarios.
+      </p>
+    </div>
+
+    <!-- 7 -->
+    <div class="term-section">
+      <h2 class="term-title">7. Derechos del Titular de Datos</h2>
+      <p class="term-text">
+        Conforme a la Ley 19.628, el usuario tiene derecho a acceder,
+        rectificar, cancelar y oponerse al tratamiento de sus datos personales.
+        Para ejercer estos derechos puede contactarse a través de la aplicación
+        o eliminar su cuenta directamente desde el dispositivo.
+      </p>
+    </div>
+
+    <!-- 8 -->
+    <div class="term-section">
+      <h2 class="term-title">8. Modificaciones</h2>
+      <p class="term-text">
+        TengoUnDato se reserva el derecho de modificar estos Términos de Uso
+        en cualquier momento. Los cambios serán notificados al usuario mediante
+        la aplicación. El uso continuado de la aplicación implica la aceptación
+        de los términos modificados.
+      </p>
+    </div>
+
+    <!-- 9 -->
+    <div class="term-section">
+      <h2 class="term-title">9. Ley Aplicable</h2>
+      <p class="term-text">
+        Estos Términos de Uso se rigen por las leyes de la República de Chile.
+        Cualquier disputa será sometida a los tribunales competentes de la
+        ciudad de Santiago de Chile.
+      </p>
+    </div>
+
+    <ion-button
+      expand="block"
+      class="term-btn-volver"
+      (click)="volver()">
+      Entendido, volver al registro
+    </ion-button>
+
+  </div>
+</ion-content>

@@ -1,0 +1,53 @@
+.term-content {
+  --background: #F7F8FA;
+}
+
+.term-wrap {
+  padding: 20px 16px 48px;
+}
+
+.term-updated {
+  font-size: 12px;
+  color: #9CA3AF;
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+.term-section {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  border: 1px solid #E8EAED;
+}
+
+.term-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 10px;
+}
+
+.term-text {
+  font-size: 13px;
+  color: #4B5563;
+  line-height: 1.7;
+  margin: 0 0 8px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  strong {
+    color: #111827;
+    font-weight: 600;
+  }
+}
+
+.term-btn-volver {
+  --background:    #E8A020;
+  --color:         #111827;
+  --border-radius: 14px;
+  margin-top: 20px;
+  font-weight: 700;
+}

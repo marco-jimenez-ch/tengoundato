@@ -26,6 +26,12 @@ export const routes: Routes = [
       import('./pages/registro/registro.page')
         .then(m => m.RegistroPage)
   },
+  {
+    path: 'terminos',
+    loadComponent: () =>
+      import('./pages/terminos/terminos.page')
+        .then(m => m.TerminosPage)
+  },
 
   // ── TABS CLIENTE ──────────────────────────────────────────────────────────
   {
@@ -126,6 +132,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/detalle-maestro/detalle-maestro.page')
         .then(m => m.DetalleMaestroPage)
+  },
+  {
+    path: 'mapa',
+    loadComponent: () =>
+      import('./pages/mapa/mapa.page')
+        .then(m => m.MapaPage)
   },
 
   // ── 404 ──────────────────────────────────────────────────────────────────

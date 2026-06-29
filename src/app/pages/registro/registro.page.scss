@@ -146,7 +146,9 @@
   color: var(--tud-dark);
   padding: 14px 0;
 
-  &::placeholder { color: #bbb; }
+  &::placeholder {
+    color: #bbb;
+  }
 }
 
 .select-field {
@@ -154,7 +156,9 @@
   cursor: pointer;
   color: var(--tud-dark);
 
-  &:invalid { color: #bbb; }
+  &:invalid {
+    color: #bbb;
+  }
 }
 
 .error-msg {
@@ -175,7 +179,10 @@
   font-size: 13px;
   color: #842029;
 
-  ion-icon { font-size: 18px; flex-shrink: 0; }
+  ion-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
 }
 
 /* ── BOTÓN ── */
@@ -223,5 +230,73 @@
 .link-gold {
   color: var(--tud-gold);
   font-weight: 700;
+  cursor: pointer;
+}
+
+/* ── AVISO DATOS PERSONALES ── */
+.aviso-datos {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #EAF3DE;
+  border: 1px solid #C3DFA0;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.aviso-icon {
+  font-size: 20px;
+  color: #3B6D11;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.aviso-texto {
+  font-size: 12px;
+  color: #3B6D11;
+  line-height: 1.6;
+  margin: 0;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+/* ── TÉRMINOS DE USO ── */
+.terminos-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1.5px solid #e0e0e0;
+  transition: border-color 0.2s;
+
+  &.terminos-error {
+    border-color: #dc3545;
+    background: #fff5f5;
+  }
+}
+
+.terminos-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.terminos-check {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  accent-color: var(--tud-gold);
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.terminos-label {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.5;
   cursor: pointer;
 }
