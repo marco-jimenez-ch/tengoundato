@@ -1,0 +1,64 @@
+<div class="cert-wrap">
+
+  <div class="cert-section-title">Agregar certificación</div>
+
+  <div class="cert-card">
+
+    <div class="cert-field">
+      <label class="cert-label">Nombre del certificado</label>
+      <input class="cert-input" type="text"
+             [(ngModel)]="nueva.nombre"
+             placeholder="Ej: Certificación en electricidad" />
+    </div>
+
+    <div class="cert-field">
+      <label class="cert-label">Fecha de obtención</label>
+      <input class="cert-input" type="date"
+             [(ngModel)]="nueva.fechaObtencion" />
+    </div>
+
+    <div class="cert-check-row">
+      <ion-checkbox
+        [(ngModel)]="nueva.vence"
+        mode="md"
+        class="cert-check">
+      </ion-checkbox>
+      <span class="cert-check-label">El certificado tiene vencimiento</span>
+    </div>
+
+    <div class="cert-field" *ngIf="nueva.vence">
+      <label class="cert-label">Fecha de vencimiento</label>
+      <input class="cert-input" type="date"
+             [(ngModel)]="nueva.fechaVencimiento" />
+    </div>
+
+    <button class="cert-btn-add" (click)="agregar()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      Agregar certificación
+    </button>
+
+  </div>
+
+  <div class="cert-section-title" *ngIf="lista.length > 0">
+    Certificaciones registradas
+  </div>
+
+  <div class="cert-item" *ngFor="let cert of lista; let i = index">
+    <div class="cert-item-top">
+      <div>
+        <p class="cert-item-nombre">{{ cert.nombre }}</p>
+        <p class="cert-item-fecha">Obtenido: {{ cert.fechaObtencion }}</p>
+        <p class="cert-item-vence" *ngIf="cert.vence">
+          Vence: {{ cert.fechaVencimiento }}
+        </p>
+        <p class="cert-item-novence" *ngIf="!cert.vence">
+          Sin vencimiento
+        </p>
+      </div>
+      <button class="cert-btn-del" (click)="eliminar(i)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+</div>

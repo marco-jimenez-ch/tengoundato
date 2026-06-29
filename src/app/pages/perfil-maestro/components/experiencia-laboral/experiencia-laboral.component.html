@@ -1,0 +1,71 @@
+<div class="el-wrap">
+
+  <div class="el-section-title">Agregar experiencia</div>
+
+  <div class="el-card">
+
+    <div class="el-field">
+      <label class="el-label">Empresa</label>
+      <input class="el-input" type="text"
+             [(ngModel)]="nueva.empresa"
+             placeholder="Nombre de la empresa" />
+    </div>
+
+    <div class="el-field">
+      <label class="el-label">Cargo</label>
+      <input class="el-input" type="text"
+             [(ngModel)]="nueva.cargo"
+             placeholder="Tu cargo" />
+    </div>
+
+    <div class="el-field">
+      <label class="el-label">Año inicio</label>
+      <input class="el-input" type="number"
+             [(ngModel)]="nueva.anioInicio"
+             placeholder="2020" />
+    </div>
+
+    <div class="el-check-row">
+      <ion-checkbox
+        [(ngModel)]="nueva.trabajaActual"
+        mode="md"
+        class="el-check">
+      </ion-checkbox>
+      <span class="el-check-label">Actualmente trabajo aquí</span>
+    </div>
+
+    <div class="el-field" *ngIf="!nueva.trabajaActual">
+      <label class="el-label">Año término</label>
+      <input class="el-input" type="number"
+             [(ngModel)]="nueva.anioTermino"
+             placeholder="2023" />
+    </div>
+
+    <button class="el-btn-add" (click)="agregar()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      Agregar experiencia
+    </button>
+
+  </div>
+
+  <div class="el-section-title" *ngIf="lista.length > 0">
+    Experiencias registradas
+  </div>
+
+  <div class="el-item" *ngFor="let exp of lista; let i = index">
+    <div class="el-item-top">
+      <div>
+        <p class="el-item-empresa">{{ exp.empresa }}</p>
+        <p class="el-item-cargo">{{ exp.cargo }}</p>
+      </div>
+      <button class="el-btn-del" (click)="eliminar(i)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </button>
+    </div>
+    <p class="el-item-periodo">
+      {{ exp.anioInicio }} —
+      {{ exp.trabajaActual ? 'Presente' : exp.anioTermino }}
+    </p>
+  </div>
+
+</div>

@@ -1,18 +1,11 @@
-@keyframes fadeLeft {
-  from { opacity: 0; transform: translateX(-24px); }
-  to   { opacity: 1; transform: translateX(0);     }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
 }
+
 @keyframes fadeUpBig {
   from { opacity: 0; transform: translateY(40px) scale(0.94); }
-  to   { opacity: 1; transform: translateY(0)    scale(1);    }
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0);    }
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0);     }
-  50%       { transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .splash-content { --background: #ffffff; }
@@ -24,10 +17,9 @@
   overflow: hidden;
 }
 
-/* ── Top: texto ── */
 .splash-top {
   padding: 64px 32px 0;
-  animation: fadeLeft 0.65s ease both;
+  opacity: 0;
 }
 
 .splash-eyebrow {
@@ -55,7 +47,6 @@
   line-height: 1.55;
 }
 
-/* ── Ilustración ── */
 .splash-illus {
   flex: 1;
   display: flex;
@@ -72,13 +63,12 @@
   }
 }
 
-/* ── Botones ── */
 .splash-bottom {
   padding: 12px 28px 48px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  animation: fadeUp 0.55s ease 0.4s both;
+  opacity: 0;
 }
 
 .btn-primary {
@@ -108,5 +98,8 @@
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
 
-  &:active { border-color: #E8A020; color: #E8A020; }
+  &:active {
+    border-color: #E8A020;
+    color: #E8A020;
+  }
 }

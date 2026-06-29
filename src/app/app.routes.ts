@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth-guard';
+import { roleGuard } from './guards/role-guard';
 
 export const routes: Routes = [
   {
@@ -31,6 +33,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/tabs-cliente/tabs-cliente.page')
         .then(m => m.TabsClientePage),
+    canActivate: [authGuard, roleGuard],
+    data: { expectedRole: 'cliente' },
     children: [
       {
         path: 'home',
@@ -64,6 +68,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/tabs-maestro/tabs-maestro.page')
         .then(m => m.TabsMaestroPage),
+    canActivate: [authGuard, roleGuard],
+    data: { expectedRole: 'maestro' },
     children: [
       {
         path: 'home',
@@ -79,9 +85,32 @@ export const routes: Routes = [
       },
       {
         path: 'perfil',
-        loadComponent: () =>
-          import('./pages/perfil-maestro/perfil-maestro.page')
-            .then(m => m.PerfilMaestroPage)
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/perfil-maestro/perfil-maestro.page')
+                .then(m => m.PerfilMaestroPage)
+          },
+          {
+            path: 'mis-datos',
+            loadComponent: () =>
+              import('./pages/perfil-maestro/components/mis-datos/mis-datos.component')
+                .then(m => m.MisDatosComponent)
+          },
+          {
+            path: 'experiencia',
+            loadComponent: () =>
+              import('./pages/perfil-maestro/components/experiencia-laboral/experiencia-laboral.component')
+                .then(m => m.ExperienciaLaboralComponent)
+          },
+          {
+            path: 'certificaciones',
+            loadComponent: () =>
+              import('./pages/perfil-maestro/components/certificaciones/certificaciones.component')
+                .then(m => m.CertificacionesComponent)
+          }
+        ]
       },
       {
         path: '',
@@ -99,8 +128,17 @@ export const routes: Routes = [
         .then(m => m.DetalleMaestroPage)
   },
 
+  // ── 404 ──────────────────────────────────────────────────────────────────
+  {
+    path: 'page-not-found',
+    loadComponent: () =>
+      import('./pages/page-not-found/page-not-found.page')
+        .then(m => m.PageNotFoundPage)
+  },
   {
     path: '**',
-    redirectTo: 'onboarding'
+    loadComponent: () =>
+      import('./pages/page-not-found/page-not-found.page')
+        .then(m => m.PageNotFoundPage)
   }
 ];

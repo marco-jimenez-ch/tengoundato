@@ -1,0 +1,50 @@
+.pnf-content {
+  --background: #ffffff;
+}
+
+.pnf-wrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.pnf-icon {
+  font-size: 72px;
+  color: #E8A020;
+  margin-bottom: 16px;
+}
+
+.pnf-title {
+  font-size: 80px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1;
+  margin: 0 0 8px;
+}
+
+.pnf-sub {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 12px;
+}
+
+.pnf-desc {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  margin: 0 0 40px;
+  line-height: 1.6;
+}
+
+.pnf-btn {
+  --background:    #E8A020;
+  --color:         #111827;
+  --border-radius: 22px;
+  width: 100%;
+  max-width: 320px;
+  font-weight: 700;
+}

@@ -1,80 +1,81 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
-  IonContent, IonButton, IonIcon, IonSpinner, IonToggle,
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel,
+  IonButton,
+  IonIcon,
   ToastController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import {
-  mailOutline, callOutline, constructOutline,
-  locationOutline, createOutline,
-} from 'ionicons/icons';
+import { logOutOutline } from 'ionicons/icons';
+import { MisDatosComponent } from './components/mis-datos/mis-datos.component';
+import { ExperienciaLaboralComponent } from './components/experiencia-laboral/experiencia-laboral.component';
+import { CertificacionesComponent } from './components/certificaciones/certificaciones.component';
+import { DbTaskService } from '../../services/db-task';
+import { StorageService } from '../../services/storage';
 
 @Component({
   selector: 'app-perfil-maestro',
   templateUrl: './perfil-maestro.page.html',
   styleUrls: ['./perfil-maestro.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, IonButton, IonIcon, IonSpinner, IonToggle],
+  imports: [
+    CommonModule,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonSegment,
+    IonSegmentButton,
+    IonLabel,
+    IonButton,
+    IonIcon,
+    MisDatosComponent,
+    ExperienciaLaboralComponent,
+    CertificacionesComponent,
+  ],
 })
-export class PerfilMaestroPage implements OnInit {
+export class PerfilMaestroPage {
 
-  iniciales  = '';
-  editando   = false;
-  isLoading  = false;
-  disponible = true;
-  rating     = 4.8;
-  trabajos   = 24;
-  resenas    = 18;
+  segmentoActivo: string = 'mis-datos';
 
-  form = { nombre: '', email: '', telefono: '', oficio: 'Electricista', comuna: '', tarifa: 15000 };
-  formOriginal = { ...this.form };
-
-  constructor(private toast: ToastController) {
-    addIcons({ mailOutline, callOutline, constructOutline, locationOutline, createOutline });
+  constructor(
+    private router:  Router,
+    private dbTask:  DbTaskService,
+    private storage: StorageService,
+    private toast:   ToastController,
+  ) {
+    addIcons({ logOutOutline });
   }
 
-  ngOnInit(): void {
-    const email  = localStorage.getItem('tud_email')  ?? 'maestro@tud.cl';
-    const nombre = localStorage.getItem('tud_nombre') ?? this.nombreDesdeEmail(email);
-    this.form = {
-      nombre,
-      email,
-      telefono: localStorage.getItem('tud_telefono') ?? '',
-      oficio:   'Electricista',
-      comuna:   localStorage.getItem('tud_comuna')   ?? '',
-      tarifa:   15000,
-    };
-    this.formOriginal = { ...this.form };
-    this.iniciales    = nombre.split(' ').map((p: string) => p[0].toUpperCase()).join('').slice(0, 2);
+  cambiarSegmento(event: any): void {
+    this.segmentoActivo = event.detail.value;
   }
 
-  activarEdicion(): void { this.formOriginal = { ...this.form }; this.editando = true; }
-  cancelarEdicion(): void { this.form = { ...this.formOriginal }; this.editando = false; }
+  async cerrarSesion(): Promise<void> {
+    const user = await this.storage.get('tud_user');
+    if (user) {
+      await this.dbTask.actualizarEstadoSesion(user, 0);
+    }
+    await this.storage.clear();
+    localStorage.removeItem('tud_role');
+    localStorage.removeItem('tud_email');
+    localStorage.removeItem('tud_nombre');
 
-  async guardar(): Promise<void> {
-    this.isLoading = true;
-    await this.delay(700);
-    this.isLoading = false;
-    localStorage.setItem('tud_nombre',   this.form.nombre);
-    localStorage.setItem('tud_telefono', this.form.telefono);
-    localStorage.setItem('tud_comuna',   this.form.comuna);
-    this.iniciales = this.form.nombre.split(' ').map((p: string) => p[0].toUpperCase()).join('').slice(0, 2);
-    this.editando  = false;
-    const t = await this.toast.create({ message: 'Perfil actualizado ✓', duration: 2000, position: 'bottom' });
+    const t = await this.toast.create({
+      message:  'Sesión cerrada correctamente',
+      duration: 2000,
+      position: 'bottom',
+    });
     await t.present();
-  }
 
-  async cambiarDisponibilidad(): Promise<void> {
-    const msg = this.disponible ? 'Ahora estás disponible 🟢' : 'Marcado como no disponible 🔴';
-    const t   = await this.toast.create({ message: msg, duration: 1800, position: 'bottom' });
-    await t.present();
+    this.router.navigateByUrl('/login', { replaceUrl: true });
   }
-
-  private nombreDesdeEmail(email: string): string {
-    return email.split('@')[0].split('.').map((p: string) => p.charAt(0).toUpperCase() + p.slice(1)).join(' ');
-  }
-
-  private delay(ms: number): Promise<void> { return new Promise(r => setTimeout(r, ms)); }
 }

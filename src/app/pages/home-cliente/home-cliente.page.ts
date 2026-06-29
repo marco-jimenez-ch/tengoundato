@@ -58,12 +58,12 @@ export class HomeClientePage implements OnInit {
   categoriaActiva = 'todos';
 
   categorias: Categoria[] = [
-    { id: 'todos',        nombre: 'Todos',        icono: '🔍' },
-    { id: 'electricista', nombre: 'Electricista',  icono: '⚡' },
-    { id: 'gasfiter',     nombre: 'Gasfiter',      icono: '🔧' },
-    { id: 'pintor',       nombre: 'Pintor',         icono: '🎨' },
-    { id: 'carpintero',   nombre: 'Carpintero',     icono: '🪚' },
-    { id: 'jardinero',    nombre: 'Jardinero',      icono: '🌿' },
+    { id: 'todos',        nombre: 'Todos',       icono: '🔍' },
+    { id: 'electricista', nombre: 'Electricista', icono: '⚡' },
+    { id: 'gasfiter',     nombre: 'Gasfiter',     icono: '🔧' },
+    { id: 'pintor',       nombre: 'Pintor',       icono: '🎨' },
+    { id: 'carpintero',   nombre: 'Carpintero',   icono: '🪚' },
+    { id: 'jardinero',    nombre: 'Jardinero',    icono: '🌿' },
   ];
 
   solicitudesActivas: Solicitud[] = [
@@ -77,11 +77,11 @@ export class HomeClientePage implements OnInit {
   ];
 
   maestros: Maestro[] = [
-    { id: 1, nombre: 'Juan Pérez',    iniciales: 'JP', oficio: 'Electricista', categoria: 'electricista', rating: 4.8, reviews: 32, precio: 15000 },
-    { id: 2, nombre: 'Carlos Rojas',  iniciales: 'CR', oficio: 'Gasfiter',     categoria: 'gasfiter',     rating: 4.6, reviews: 18, precio: 12000 },
-    { id: 3, nombre: 'Luis Mora',     iniciales: 'LM', oficio: 'Pintor',       categoria: 'pintor',       rating: 4.9, reviews: 45, precio: 10000 },
-    { id: 4, nombre: 'Pedro Soto',    iniciales: 'PS', oficio: 'Carpintero',   categoria: 'carpintero',   rating: 4.7, reviews: 27, precio: 14000 },
-    { id: 5, nombre: 'Ana González',  iniciales: 'AG', oficio: 'Jardinera',    categoria: 'jardinero',    rating: 4.5, reviews: 12, precio: 9000  },
+    { id: 1, nombre: 'Juan Pérez',   iniciales: 'JP', oficio: 'Electricista', categoria: 'electricista', rating: 4.8, reviews: 32, precio: 15000 },
+    { id: 2, nombre: 'Carlos Rojas', iniciales: 'CR', oficio: 'Gasfiter',     categoria: 'gasfiter',     rating: 4.6, reviews: 18, precio: 12000 },
+    { id: 3, nombre: 'Luis Mora',    iniciales: 'LM', oficio: 'Pintor',       categoria: 'pintor',       rating: 4.9, reviews: 45, precio: 10000 },
+    { id: 4, nombre: 'Pedro Soto',   iniciales: 'PS', oficio: 'Carpintero',   categoria: 'carpintero',   rating: 4.7, reviews: 27, precio: 14000 },
+    { id: 5, nombre: 'Ana González', iniciales: 'AG', oficio: 'Jardinera',    categoria: 'jardinero',    rating: 4.5, reviews: 12, precio: 9000  },
   ];
 
   maestrosFiltrados: Maestro[] = [];
@@ -91,10 +91,18 @@ export class HomeClientePage implements OnInit {
   }
 
   ngOnInit(): void {
-    const email = localStorage.getItem('tud_email') ?? 'cliente@tud.cl';
-    const partes = email.split('@')[0].split('.');
-    this.nombreUsuario = partes.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ');
-    this.iniciales     = partes.map(p => p.charAt(0).toUpperCase()).join('').slice(0, 2);
+    const email  = localStorage.getItem('tud_email') ?? 'cliente@tud.cl';
+    const nombre = localStorage.getItem('tud_nombre');
+
+    if (nombre) {
+      this.nombreUsuario = nombre;
+      this.iniciales = nombre.split(' ').map((p: string) => p[0].toUpperCase()).join('').slice(0, 2);
+    } else {
+      const partes = email.split('@')[0].split('.');
+      this.nombreUsuario = partes.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ');
+      this.iniciales     = partes.map(p => p.charAt(0).toUpperCase()).join('').slice(0, 2);
+    }
+
     this.maestrosFiltrados = [...this.maestros];
   }
 
@@ -121,14 +129,14 @@ export class HomeClientePage implements OnInit {
   }
 
   verMaestro(maestro: Maestro): void {
-    this.router.navigateByUrl('/detalle-maestro');
+    this.router.navigate(['/detalle-maestro', maestro.id]);
   }
 
   nuevaSolicitud(): void {
-    this.router.navigateByUrl('/solicitudes-maestro');
+    this.router.navigate(['/cliente/solicitudes']);
   }
 
   irAPerfil(): void {
-    this.router.navigateByUrl('/perfil-cliente');
+    this.router.navigate(['/cliente/perfil']);
   }
 }

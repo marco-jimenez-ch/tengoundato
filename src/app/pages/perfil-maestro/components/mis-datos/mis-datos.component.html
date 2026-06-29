@@ -1,0 +1,50 @@
+<div class="md-wrap">
+
+  <div class="md-section-title">Mis datos personales</div>
+
+  <div class="md-field">
+    <ion-icon name="person-outline" class="md-icon"></ion-icon>
+    <div class="md-input-group">
+      <label class="md-label">Nombre completo</label>
+      <input class="md-input" type="text"
+             [(ngModel)]="datos.nombre"
+             placeholder="Tu nombre" />
+    </div>
+  </div>
+
+  <div class="md-field">
+    <ion-icon name="mail-outline" class="md-icon"></ion-icon>
+    <div class="md-input-group">
+      <label class="md-label">Correo electrónico</label>
+      <input class="md-input" type="email"
+             [(ngModel)]="datos.email"
+             placeholder="correo@ejemplo.com" />
+    </div>
+  </div>
+
+  <div class="md-field">
+    <ion-icon name="call-outline" class="md-icon"></ion-icon>
+    <div class="md-input-group">
+      <label class="md-label">Teléfono</label>
+      <input class="md-input" type="tel"
+             [(ngModel)]="datos.telefono"
+             placeholder="+56 9 0000 0000" />
+    </div>
+  </div>
+
+  <div class="md-field">
+    <ion-icon name="construct-outline" class="md-icon"></ion-icon>
+    <div class="md-input-group">
+      <label class="md-label">Oficio</label>
+      <input class="md-input" type="text"
+             [(ngModel)]="datos.oficio"
+             placeholder="Ej: Electricista" />
+    </div>
+  </div>
+
+  <button class="md-btn-save" (click)="guardar()">
+    <ion-icon name="save-outline"></ion-icon>
+    Guardar datos
+  </button>
+
+</div>
