@@ -1,8 +1,6 @@
 <ion-content [fullscreen]="true" class="splash-content">
-
   <div class="splash">
 
-    <!-- Logo / título -->
     <div class="splash-top">
       <p class="splash-eyebrow">Bienvenido a</p>
       <h1 class="splash-title">
@@ -13,21 +11,33 @@
       <p class="splash-sub">Oficios de confianza<br>en tu barrio</p>
     </div>
 
-    <!-- Ilustración -->
     <div class="splash-illus">
       <img src="assets/slides/slide1.png" alt="maestro" />
     </div>
 
-    <!-- Acciones -->
     <div class="splash-bottom">
-      <button class="btn-primary" (click)="irARegistro()">
+      <ion-button
+        expand="block"
+        class="btn-primary-ion"
+        (click)="irARegistro()">
         Crear cuenta
-      </button>
-      <button class="btn-secondary" (click)="irALogin()">
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        class="btn-secondary-ion"
+        (click)="irALogin()">
         Ya tengo cuenta → Iniciar sesión
-      </button>
+      </ion-button>
+
+      <p class="aviso-legal">
+        Al continuar aceptas nuestros
+        <span class="aviso-link" (click)="irATerminos()">Términos de Uso</span>
+        y la protección de tus datos bajo la
+        <strong>Ley 19.628</strong> de Chile.
+      </p>
     </div>
 
   </div>
-
 </ion-content>

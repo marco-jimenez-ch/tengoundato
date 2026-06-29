@@ -19,7 +19,6 @@
 
 .splash-top {
   padding: 64px 32px 0;
-  opacity: 0;
 }
 
 .splash-eyebrow {
@@ -64,42 +63,48 @@
 }
 
 .splash-bottom {
-  padding: 12px 28px 48px;
+  padding: 12px 28px 40px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  opacity: 0;
+  gap: 10px;
 }
 
-.btn-primary {
-  width: 100%;
-  background: #E8A020;
-  color: #111827;
-  border: none;
-  border-radius: 22px;
-  padding: 15px;
+.btn-primary-ion {
+  --background:    #E8A020;
+  --color:         #111827;
+  --border-radius: 22px;
+  --box-shadow:    none;
   font-size: 16px;
   font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.2s;
-
-  &:active { opacity: 0.85; }
+  height: 52px;
 }
 
-.btn-secondary {
-  width: 100%;
-  background: transparent;
-  color: rgba(0, 0, 0, 0.5);
-  border: 1.5px solid rgba(0, 0, 0, 0.12);
-  border-radius: 22px;
-  padding: 14px;
+.btn-secondary-ion {
+  --color:          rgba(0, 0, 0, 0.5);
+  --border-color:   rgba(0, 0, 0, 0.12);
+  --border-radius:  22px;
+  --box-shadow:     none;
+  --background:     transparent;
   font-size: 14px;
   font-weight: 500;
-  cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
+  height: 50px;
+}
 
-  &:active {
-    border-color: #E8A020;
-    color: #E8A020;
+.aviso-legal {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.4);
+  text-align: center;
+  margin: 4px 0 0;
+  line-height: 1.5;
+
+  strong {
+    color: rgba(0, 0, 0, 0.6);
   }
+}
+
+.aviso-link {
+  color: #E8A020;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
 }

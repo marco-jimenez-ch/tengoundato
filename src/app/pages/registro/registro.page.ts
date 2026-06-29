@@ -56,7 +56,6 @@ export class RegistroPage implements OnInit {
   isLoading     = false;
   errorMsg      = '';
 
-  // Términos de uso
   aceptaTerminos  = false;
   terminosTocado  = false;
 
@@ -82,6 +81,10 @@ export class RegistroPage implements OnInit {
 
   ngOnInit(): void {}
 
+  seleccionarRol(nuevoRol: 'cliente' | 'maestro'): void {
+    this.rol = nuevoRol;
+  }
+
   tocar(campo: string): void {
     this.tocados[campo] = true;
   }
@@ -95,13 +98,13 @@ export class RegistroPage implements OnInit {
   }
 
   formularioValido(): boolean {
-    if (!this.form.nombre.trim())                           return false;
-    if (!this.emailValido())                                return false;
-    if (!this.form.telefono.trim())                         return false;
-    if (this.form.password.length < 6)                     return false;
-    if (this.form.password !== this.form.confirmar)         return false;
-    if (this.rol === 'maestro' && !this.form.oficio)        return false;
-    if (!this.aceptaTerminos)                               return false;
+    if (!this.form.nombre.trim())                    return false;
+    if (!this.emailValido())                          return false;
+    if (!this.form.telefono.trim())                   return false;
+    if (this.form.password.length < 6)               return false;
+    if (this.form.password !== this.form.confirmar)  return false;
+    if (this.rol === 'maestro' && !this.form.oficio) return false;
+    if (!this.aceptaTerminos)                        return false;
     return true;
   }
 
@@ -109,7 +112,6 @@ export class RegistroPage implements OnInit {
     ['nombre', 'email', 'telefono', 'password', 'confirmar'].forEach(c => this.tocar(c));
     if (this.rol === 'maestro') this.tocar('oficio');
     this.terminosTocado = true;
-
     this.errorMsg = '';
 
     if (!this.aceptaTerminos) {

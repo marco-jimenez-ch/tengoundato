@@ -19,10 +19,16 @@
 
   <!-- SELECTOR ROL -->
   <div class="rol-selector">
-    <div class="rol-chip" [class.activo]="rol === 'cliente'" (click)="rol = 'cliente'">
+    <div
+      class="rol-chip"
+      [class.activo]="rol === 'cliente'"
+      (click)="seleccionarRol('cliente')">
       <span>👤</span> Soy cliente
     </div>
-    <div class="rol-chip" [class.activo]="rol === 'maestro'" (click)="rol = 'maestro'">
+    <div
+      class="rol-chip"
+      [class.activo]="rol === 'maestro'"
+      (click)="seleccionarRol('maestro')">
       <span>🔧</span> Soy maestro
     </div>
   </div>
@@ -89,7 +95,10 @@
       <label class="campo-label">Oficio</label>
       <div class="input-wrap">
         <ion-icon name="construct-outline" class="input-icon"></ion-icon>
-        <select [(ngModel)]="form.oficio" name="oficio" class="input-field select-field">
+        <select
+          [(ngModel)]="form.oficio"
+          name="oficio"
+          class="input-field select-field">
           <option value="" disabled>Selecciona tu oficio</option>
           <option value="electricista">Electricista</option>
           <option value="gasfiter">Gasfiter</option>

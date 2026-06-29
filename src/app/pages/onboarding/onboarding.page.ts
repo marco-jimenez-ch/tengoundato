@@ -1,6 +1,9 @@
-import { Component, OnInit, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, AfterViewInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonButton,
+} from '@ionic/angular/standalone';
 import { AnimationController } from '@ionic/angular/standalone';
 
 @Component({
@@ -8,36 +11,42 @@ import { AnimationController } from '@ionic/angular/standalone';
   templateUrl: './onboarding.page.html',
   styleUrls: ['./onboarding.page.scss'],
   standalone: true,
-  imports: [IonContent],
+  imports: [IonContent, IonButton],
 })
-export class OnboardingPage implements OnInit {
+export class OnboardingPage implements AfterViewInit {
 
   constructor(
-    private router:    Router,
-    private animCtrl:  AnimationController,
-    private el:        ElementRef,
+    private router:   Router,
+    private animCtrl: AnimationController,
+    private el:       ElementRef,
   ) {}
 
-  ngOnInit(): void {
-    this.animarEntrada();
+  ngAfterViewInit(): void {
+    setTimeout(() => this.animarEntrada(), 50);
   }
 
   private animarEntrada(): void {
-    const host = this.el.nativeElement;
+    const host     = this.el.nativeElement;
+    const elTop    = host.querySelector('.splash-top');
+    const elBottom = host.querySelector('.splash-bottom');
 
-    // Animación 1 — título entra desde la izquierda (Ionic)
+    if (!elTop || !elBottom) {
+      if (elTop)    (elTop as HTMLElement).style.opacity = '1';
+      if (elBottom) (elBottom as HTMLElement).style.opacity = '1';
+      return;
+    }
+
     const animTitulo = this.animCtrl
       .create('anim-titulo')
-      .addElement(host.querySelector('.splash-top'))
+      .addElement(elTop)
       .duration(650)
       .easing('ease-out')
       .fromTo('opacity',   '0', '1')
       .fromTo('transform', 'translateX(-24px)', 'translateX(0)');
 
-    // Animación 2 — botones suben desde abajo (Ionic)
     const animBotones = this.animCtrl
       .create('anim-botones')
-      .addElement(host.querySelector('.splash-bottom'))
+      .addElement(elBottom)
       .duration(550)
       .delay(400)
       .easing('ease-out')
@@ -48,11 +57,15 @@ export class OnboardingPage implements OnInit {
     animBotones.play();
   }
 
+  irARegistro(): void {
+    this.router.navigate(['/registro']);
+  }
+
   irALogin(): void {
     this.router.navigate(['/login']);
   }
 
-  irARegistro(): void {
-    this.router.navigate(['/registro']);
+  irATerminos(): void {
+    this.router.navigate(['/terminos']);
   }
 }
