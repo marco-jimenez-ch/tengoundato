@@ -1,38 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonContent, IonHeader, IonTitle, IonToolbar,
   IonBackButton, IonButtons, IonButton, IonIcon,
+  IonSpinner,
   ToastController,
+  AlertController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
   locationOutline, checkmarkCircleOutline, timeOutline,
-  logoWhatsapp,
+  logoWhatsapp, createOutline,
 } from 'ionicons/icons';
 import { MatChipsModule } from '@angular/material/chips';
+import { ApiService, Maestro } from '../../services/api';
 
 interface Resena {
-  cliente: string;
+  cliente:   string;
   iniciales: string;
-  fecha: string;
-  rating: number;
-  texto: string;
+  fecha:     string;
+  rating:    number;
+  texto:     string;
 }
 
 interface MaestroDetalle {
-  id: number;
-  nombre: string;
-  iniciales: string;
-  oficio: string;
-  categoria: string;
-  comuna: string;
-  rating: number;
-  reviews: number;
-  precio: number;
+  id:             number;
+  nombre:         string;
+  iniciales:      string;
+  oficio:         string;
+  categoria:      string;
+  comuna:         string;
+  rating:         number;
+  reviews:        number;
+  precio:         number;
   especialidades: string[];
-  resenas: Resena[];
+  resenas:        Resena[];
 }
 
 const MAESTROS: MaestroDetalle[] = [
@@ -94,27 +98,109 @@ const MAESTROS: MaestroDetalle[] = [
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     IonContent, IonHeader, IonTitle, IonToolbar,
     IonBackButton, IonButtons, IonButton, IonIcon,
+    IonSpinner,
     MatChipsModule,
   ],
 })
 export class DetalleMaestroPage implements OnInit {
 
-  maestro: MaestroDetalle = MAESTROS[0];
+  maestro:      MaestroDetalle = MAESTROS[0];
+  maestroApi:   Maestro | null = null;
+  isLoading =   false;
 
   constructor(
-    private route: ActivatedRoute,
+    private route:  ActivatedRoute,
     private router: Router,
-    private toast: ToastController,
+    private toast:  ToastController,
+    private alert:  AlertController,
+    private api:    ApiService,
   ) {
-    addIcons({ locationOutline, checkmarkCircleOutline, timeOutline, logoWhatsapp });
+    addIcons({ locationOutline, checkmarkCircleOutline, timeOutline, logoWhatsapp, createOutline });
   }
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id    = Number(this.route.snapshot.paramMap.get('id'));
     const found = MAESTROS.find(m => m.id === id);
     if (found) this.maestro = found;
+
+    // GET maestro desde API
+    this.cargarDesdApi(id);
+  }
+
+  // GET — obtener maestro desde json-server
+  cargarDesdApi(id: number): void {
+    this.isLoading = true;
+    this.api.getMaestro(id).subscribe(
+      (data) => {
+        this.maestroApi = data;
+        this.isLoading  = false;
+      },
+      (error) => {
+        this.isLoading = false;
+        console.error('Error cargando maestro desde API:', error);
+      }
+    );
+  }
+
+  // PUT — editar disponibilidad del maestro via API
+  async editarDisponibilidad(): Promise<void> {
+    if (!this.maestroApi) {
+      this.mostrarToast('Datos de API no disponibles');
+      return;
+    }
+
+    const alerta = await this.alert.create({
+      header: 'Editar maestro',
+      inputs: [
+        {
+          name:    'nombre',
+          type:    'text',
+          value:   this.maestroApi.nombre,
+          placeholder: 'Nombre',
+        },
+        {
+          name:    'oficio',
+          type:    'text',
+          value:   this.maestroApi.oficio,
+          placeholder: 'Oficio',
+        },
+        {
+          name:    'telefono',
+          type:    'text',
+          value:   this.maestroApi.telefono,
+          placeholder: 'Teléfono',
+        },
+      ],
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Guardar',
+          handler: (data) => {
+            const actualizado: Maestro = {
+              ...this.maestroApi!,
+              nombre:   data.nombre,
+              oficio:   data.oficio,
+              telefono: data.telefono,
+            };
+            // PUT — actualizar en json-server
+            this.api.updateMaestro(this.maestroApi!.id!, actualizado).subscribe(
+              (res) => {
+                this.maestroApi = res;
+                this.mostrarToast('Maestro actualizado correctamente');
+              },
+              (error) => {
+                this.mostrarToast('Error al actualizar');
+                console.error(error);
+              }
+            );
+          }
+        }
+      ]
+    });
+    await alerta.present();
   }
 
   contactarWhatsapp(): void {
@@ -125,10 +211,20 @@ export class DetalleMaestroPage implements OnInit {
 
   async solicitarServicio(): Promise<void> {
     const t = await this.toast.create({
-      message: `Solicitud enviada a ${this.maestro.nombre}`,
-      duration: 2500, position: 'bottom',
+      message:  `Solicitud enviada a ${this.maestro.nombre}`,
+      duration: 2500,
+      position: 'bottom',
     });
     await t.present();
     this.router.navigate(['/cliente/home']);
+  }
+
+  private async mostrarToast(msg: string): Promise<void> {
+    const t = await this.toast.create({
+      message:  msg,
+      duration: 2000,
+      position: 'bottom',
+    });
+    await t.present();
   }
 }

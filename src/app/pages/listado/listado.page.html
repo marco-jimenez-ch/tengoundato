@@ -1,85 +1,85 @@
-<ion-header [translucent]="true" class="tud-header">
+<ion-header>
   <ion-toolbar>
-    <ion-title>Explorar</ion-title>
+    <ion-title>Maestros disponibles</ion-title>
+    <ion-button slot="end" fill="clear" (click)="irAlMapa()">
+      <ion-icon name="map-outline" slot="icon-only"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="listado-content">
+<ion-content class="lst-content">
 
-  <!-- Buscador + filtro -->
-  <div class="search-area">
-    <ion-searchbar
-      [(ngModel)]="busqueda"
-      (ionInput)="filtrar()"
-      placeholder="Buscar oficio o nombre..."
-      class="tud-searchbar">
-    </ion-searchbar>
+  <!-- Banner modo offline -->
+  <div class="lst-offline-banner" *ngIf="modoOffline">
+    <ion-icon name="cloud-offline-outline"></ion-icon>
+    <span>Sin conexión — mostrando datos guardados anteriormente</span>
+  </div>
 
-    <div class="chips-scroll">
-      <ion-chip
-        *ngFor="let cat of categorias"
-        [class.chip-active]="catActiva === cat.id"
-        (click)="seleccionarCat(cat.id)">
-        <span class="chip-icon">{{ cat.icono }}</span>
-        <ion-label>{{ cat.nombre }}</ion-label>
-      </ion-chip>
+  <div *ngIf="isLoading" class="lst-loading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando maestros...</p>
+  </div>
+
+  <div *ngIf="errorMsg && !isLoading" class="lst-error">
+    <p>{{ errorMsg }}</p>
+    <ion-button size="small" (click)="cargarMaestros()">Reintentar</ion-button>
+  </div>
+
+  <div *ngIf="!isLoading && !errorMsg">
+
+    <div class="lst-section-title">Maestros</div>
+
+    <div class="lst-card" *ngFor="let m of maestros" (click)="verDetalle(m.id!)">
+      <div class="lst-card-top">
+        <div class="lst-avatar">{{ m.nombre.charAt(0) }}</div>
+        <div class="lst-info">
+          <p class="lst-nombre">{{ m.nombre }}</p>
+          <p class="lst-oficio">
+            <ion-icon name="construct-outline"></ion-icon>
+            {{ m.oficio }}
+          </p>
+          <p class="lst-tel">
+            <ion-icon name="call-outline"></ion-icon>
+            {{ m.telefono }}
+          </p>
+        </div>
+        <div class="lst-rating">
+          <ion-icon name="star-outline"></ion-icon>
+          {{ m.rating }}
+        </div>
+      </div>
+      <div class="lst-card-bottom">
+        <ion-badge [color]="m.disponible ? 'success' : 'medium'">
+          {{ m.disponible ? 'Disponible' : 'No disponible' }}
+        </ion-badge>
+        <ion-button
+          size="small"
+          fill="outline"
+          [disabled]="!m.disponible"
+          (click)="crearSolicitud(m); $event.stopPropagation()">
+          Solicitar
+        </ion-button>
+      </div>
     </div>
-  </div>
 
-  <!-- Contador -->
-  <div class="result-count" *ngIf="!cargando">
-    {{ maestrosFiltrados.length }} maestros disponibles
-  </div>
+    <div class="lst-section-title" *ngIf="solicitudes.length > 0">
+      Mis solicitudes
+    </div>
 
-  <!-- Skeleton mientras carga -->
-  <div *ngIf="cargando" class="skeleton-wrap">
-    <ion-card *ngFor="let i of [1,2,3]" class="maestro-card skeleton-card">
-      <ion-card-content>
-        <div class="card-row">
-          <ion-skeleton-text [animated]="true" class="sk-avatar"></ion-skeleton-text>
-          <div class="card-info" style="flex:1">
-            <ion-skeleton-text [animated]="true" style="width:60%; height:16px; margin-bottom:6px;"></ion-skeleton-text>
-            <ion-skeleton-text [animated]="true" style="width:40%; height:13px;"></ion-skeleton-text>
-          </div>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </div>
+    <div class="lst-solicitud" *ngFor="let s of solicitudes">
+      <div class="lst-sol-top">
+        <p class="lst-sol-desc">{{ s.descripcion }}</p>
+        <ion-button
+          fill="clear"
+          color="danger"
+          size="small"
+          (click)="eliminarSolicitud(s.id!)">
+          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+      <ion-badge color="warning">{{ s.estado }}</ion-badge>
+    </div>
 
-  <!-- Lista de maestros -->
-  <ion-list *ngIf="!cargando" lines="none" class="maestros-list">
-    <ion-item-sliding *ngFor="let m of maestrosFiltrados">
-
-      <ion-item class="maestro-item" (click)="verDetalle(m)" detail="false" button>
-        <div class="maestro-avatar" slot="start">{{ m.iniciales }}</div>
-        <ion-label>
-          <h2 class="m-nombre">{{ m.nombre }}</h2>
-          <p class="m-oficio">{{ m.oficio }} · {{ m.comuna }}</p>
-          <div class="m-rating">
-            <span class="estrella">★</span>
-            <span class="rating-val">{{ m.rating }}</span>
-            <span class="rating-count">({{ m.reviews }} reseñas)</span>
-          </div>
-        </ion-label>
-        <div class="m-precio" slot="end">
-          <p class="precio">${{ m.precio | number }}</p>
-          <p class="precio-label">/hora</p>
-        </div>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="primary" (click)="verDetalle(m)">
-          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-
-    </ion-item-sliding>
-  </ion-list>
-
-  <!-- Estado vacío -->
-  <div class="empty-state" *ngIf="!cargando && maestrosFiltrados.length === 0">
-    <ion-icon name="search-outline" class="empty-icon"></ion-icon>
-    <p>Sin resultados para "{{ busqueda }}"</p>
   </div>
 
 </ion-content>

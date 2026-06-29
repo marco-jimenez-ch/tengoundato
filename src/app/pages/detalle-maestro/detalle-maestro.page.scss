@@ -56,7 +56,10 @@
   font-size: 14px;
   color: #111827;
   border-bottom: 1px solid rgba(0,0,0,0.05);
-  &:last-child { border-bottom: none; }
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .i-icon  { font-size: 18px; color: rgba(0,0,0,0.4); flex-shrink: 0; }
@@ -78,7 +81,10 @@
 .resena-item {
   padding: 10px 0;
   border-bottom: 1px solid rgba(0,0,0,0.05);
-  &:last-child { border-bottom: none; }
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .r-top {
@@ -89,10 +95,17 @@
 }
 
 .r-avatar {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: #0F2D52; color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #0F2D52;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
 .r-nombre { font-size: 13px; font-weight: 600; margin: 0 0 2px; color: #111827; }
@@ -103,7 +116,10 @@
   margin-left: auto;
   font-size: 13px;
   color: rgba(0,0,0,0.2);
-  .filled { color: #E8A020; }
+
+  .filled {
+    color: #E8A020;
+  }
 }
 
 /* ── Botones ── */
@@ -115,3 +131,57 @@
 }
 
 .btn-ws { --background: #25A85A; --background-activated: #1e8f4b; }
+
+/* ── Datos desde API ── */
+.api-card {
+  background: #fff;
+  border-radius: 18px;
+  margin: 12px 14px 0;
+  padding: 16px 18px;
+  border-left: 4px solid #E8A020;
+}
+
+.api-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #E8A020;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+
+.api-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.api-key {
+  font-size: 13px;
+  color: #6B7280;
+}
+
+.api-val {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ── Loading API ── */
+.api-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 14px 0;
+  padding: 12px 18px;
+  background: #fff;
+  border-radius: 18px;
+  font-size: 13px;
+  color: #9CA3AF;
+}

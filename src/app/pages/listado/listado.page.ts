@@ -3,32 +3,33 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
-  IonContent, IonHeader, IonTitle, IonToolbar,
-  IonSearchbar, IonChip, IonLabel,
-  IonList, IonItem, IonItemSliding, IonItemOptions, IonItemOption,
-  IonCard, IonCardContent, IonSkeletonText, IonIcon,
-  AnimationController,
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButton,
+  IonIcon,
+  IonBadge,
+  IonSpinner,
+  ToastController,
+  AlertController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { searchOutline, eyeOutline } from 'ionicons/icons';
+import {
+  addOutline,
+  trashOutline,
+  starOutline,
+  callOutline,
+  constructOutline,
+  mapOutline,
+  cloudOfflineOutline,
+} from 'ionicons/icons';
+import { ApiService, Maestro, Solicitud } from '../../services/api';
+import { StorageService } from '../../services/storage';
 
-interface Maestro {
-  id: number;
-  nombre: string;
-  iniciales: string;
-  oficio: string;
-  categoria: string;
-  comuna: string;
-  rating: number;
-  reviews: number;
-  precio: number;
-}
-
-interface Categoria {
-  id: string;
-  nombre: string;
-  icono: string;
-}
+// Claves de Storage para persistencia offline
+const KEY_MAESTROS    = 'tud_maestros_cache';
+const KEY_SOLICITUDES = 'tud_solicitudes_cache';
 
 @Component({
   selector: 'app-listado',
@@ -36,93 +37,161 @@ interface Categoria {
   styleUrls: ['./listado.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, FormsModule,
-    IonContent, IonHeader, IonTitle, IonToolbar,
-    IonSearchbar, IonChip, IonLabel,
-    IonList, IonItem, IonItemSliding, IonItemOptions, IonItemOption,
-    IonCard, IonCardContent, IonSkeletonText, IonIcon,
+    CommonModule,
+    FormsModule,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButton,
+    IonIcon,
+    IonBadge,
+    IonSpinner,
   ],
 })
 export class ListadoPage implements OnInit {
 
-  busqueda   = '';
-  catActiva  = 'todos';
-  cargando   = true;
-
-  categorias: Categoria[] = [
-    { id: 'todos',        nombre: 'Todos',       icono: '🔍' },
-    { id: 'electricista', nombre: 'Electricista', icono: '⚡' },
-    { id: 'gasfiter',     nombre: 'Gasfiter',     icono: '🔧' },
-    { id: 'pintor',       nombre: 'Pintor',       icono: '🎨' },
-    { id: 'carpintero',   nombre: 'Carpintero',   icono: '🪚' },
-    { id: 'jardinero',    nombre: 'Jardinero',    icono: '🌿' },
-  ];
-
-  maestros: Maestro[] = [
-    { id: 1, nombre: 'Juan Pérez',   iniciales: 'JP', oficio: 'Electricista', categoria: 'electricista', comuna: 'Providencia', rating: 4.8, reviews: 32, precio: 15000 },
-    { id: 2, nombre: 'Carlos Rojas', iniciales: 'CR', oficio: 'Gasfiter',     categoria: 'gasfiter',     comuna: 'Ñuñoa',       rating: 4.6, reviews: 18, precio: 12000 },
-    { id: 3, nombre: 'Luis Mora',    iniciales: 'LM', oficio: 'Pintor',       categoria: 'pintor',       comuna: 'Las Condes',  rating: 4.9, reviews: 45, precio: 10000 },
-    { id: 4, nombre: 'Pedro Soto',   iniciales: 'PS', oficio: 'Carpintero',   categoria: 'carpintero',   comuna: 'Maipú',       rating: 4.7, reviews: 27, precio: 14000 },
-    { id: 5, nombre: 'Ana González', iniciales: 'AG', oficio: 'Jardinera',    categoria: 'jardinero',    comuna: 'Vitacura',    rating: 4.5, reviews: 12, precio: 9000  },
-    { id: 6, nombre: 'Mario Silva',  iniciales: 'MS', oficio: 'Electricista', categoria: 'electricista', comuna: 'La Florida',  rating: 4.3, reviews: 8,  precio: 13000 },
-  ];
-
-  maestrosFiltrados: Maestro[] = [];
+  maestros:     Maestro[]   = [];
+  solicitudes:  Solicitud[] = [];
+  isLoading   = false;
+  errorMsg    = '';
+  modoOffline = false;
 
   constructor(
-    private router: Router,
-    private animCtrl: AnimationController,
+    private api:     ApiService,
+    private router:  Router,
+    private toast:   ToastController,
+    private alert:   AlertController,
+    private storage: StorageService,
   ) {
-    addIcons({ searchOutline, eyeOutline });
-  }
-
-  ngOnInit(): void {
-    // Simular carga con skeleton + animación de entrada
-    setTimeout(() => {
-      this.cargando = false;
-      this.maestrosFiltrados = [...this.maestros];
-      // Animación de entrada con AnimationController (requerimiento IL2)
-      setTimeout(() => this.animarEntrada(), 50);
-    }, 800);
-  }
-
-  private animarEntrada(): void {
-    const items = document.querySelectorAll('.maestro-item');
-    items.forEach((el, i) => {
-      const anim = this.animCtrl
-        .create()
-        .addElement(el)
-        .duration(320)
-        .delay(i * 60)
-        .easing('ease-out')
-        .fromTo('opacity', '0', '1')
-        .fromTo('transform', 'translateY(16px)', 'translateY(0)');
-      anim.play();
+    addIcons({
+      addOutline, trashOutline, starOutline,
+      callOutline, constructOutline, mapOutline,
+      cloudOfflineOutline,
     });
   }
 
-  seleccionarCat(id: string): void {
-    this.catActiva = id;
-    this.filtrar();
+  ngOnInit(): void {
+    this.cargarMaestros();
+    this.cargarSolicitudes();
   }
 
-  filtrar(): void {
-    let res = [...this.maestros];
-    if (this.catActiva !== 'todos') {
-      res = res.filter(m => m.categoria === this.catActiva);
-    }
-    const q = this.busqueda.trim().toLowerCase();
-    if (q) {
-      res = res.filter(m =>
-        m.nombre.toLowerCase().includes(q) ||
-        m.oficio.toLowerCase().includes(q)  ||
-        m.comuna.toLowerCase().includes(q)
-      );
-    }
-    this.maestrosFiltrados = res;
+  // GET maestros — con fallback a Storage si falla la API (criterio S6)
+  cargarMaestros(): void {
+    this.isLoading  = true;
+    this.errorMsg   = '';
+    this.modoOffline = false;
+
+    this.api.getMaestros().subscribe(
+      async (data) => {
+        this.maestros  = data;
+        this.isLoading = false;
+        // Guardar en Storage como caché offline
+        this.storage.set(KEY_MAESTROS, JSON.stringify(data));
+      },
+      async (error) => {
+        console.error('Error API maestros:', error);
+        this.isLoading = false;
+
+        // Fallback: mostrar datos almacenados anteriormente
+        const cache = await this.storage.get(KEY_MAESTROS);
+        if (cache) {
+          this.maestros    = JSON.parse(cache);
+          this.modoOffline = true;
+          this.mostrarToast('Sin conexión — mostrando datos guardados');
+        } else {
+          this.errorMsg = 'Sin conexión y sin datos guardados. Intenta más tarde.';
+        }
+      }
+    );
   }
 
-  verDetalle(m: Maestro): void {
-    this.router.navigate(['/detalle-maestro', m.id]);
+  // GET solicitudes — con fallback a Storage
+  cargarSolicitudes(): void {
+    this.api.getSolicitudes().subscribe(
+      async (data) => {
+        this.solicitudes = data;
+        this.storage.set(KEY_SOLICITUDES, JSON.stringify(data));
+      },
+      async (error) => {
+        console.error('Error API solicitudes:', error);
+        const cache = await this.storage.get(KEY_SOLICITUDES);
+        if (cache) {
+          this.solicitudes = JSON.parse(cache);
+        }
+      }
+    );
+  }
+
+  // POST solicitud
+  async crearSolicitud(maestro: Maestro): Promise<void> {
+    const alerta = await this.alert.create({
+      header: 'Nueva solicitud',
+      inputs: [
+        {
+          name:        'descripcion',
+          type:        'textarea',
+          placeholder: 'Describe el trabajo que necesitas',
+        }
+      ],
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Enviar',
+          handler: (data) => {
+            if (!data.descripcion) return false;
+            const solicitud: Solicitud = {
+              clienteEmail: localStorage.getItem('tud_email') || '',
+              maestroId:    maestro.id!,
+              descripcion:  data.descripcion,
+              estado:       'pendiente',
+            };
+            this.api.createSolicitud(solicitud).subscribe(
+              () => {
+                this.mostrarToast('Solicitud enviada correctamente');
+                this.cargarSolicitudes();
+              },
+              (error) => {
+                this.mostrarToast('Error al enviar solicitud');
+                console.error(error);
+              }
+            );
+            return true;
+          }
+        }
+      ]
+    });
+    await alerta.present();
+  }
+
+  // DELETE solicitud
+  eliminarSolicitud(id: number): void {
+    this.api.deleteSolicitud(id).subscribe(
+      () => {
+        this.mostrarToast('Solicitud eliminada');
+        this.cargarSolicitudes();
+      },
+      (error) => {
+        this.mostrarToast('Error al eliminar');
+        console.error(error);
+      }
+    );
+  }
+
+  irAlMapa(): void {
+    this.router.navigateByUrl('/mapa');
+  }
+
+  verDetalle(id: number): void {
+    this.router.navigateByUrl(`/detalle-maestro/${id}`);
+  }
+
+  private async mostrarToast(msg: string): Promise<void> {
+    const t = await this.toast.create({
+      message:  msg,
+      duration: 2500,
+      position: 'bottom',
+    });
+    await t.present();
   }
 }

@@ -1,0 +1,104 @@
+.mapa-content {
+  --background: #F7F8FA;
+}
+
+.mapa-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  color: #9CA3AF;
+  font-size: 14px;
+  gap: 12px;
+}
+
+.mapa-error {
+  text-align: center;
+  padding: 60px 20px;
+  color: #DC2626;
+  font-size: 14px;
+}
+
+.mapa-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mapa-frame-wrap {
+  width: 100%;
+  height: 55vh;
+  background: #E8EAED;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.mapa-frame {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mapa-tap-hint {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.mapa-coords {
+  background: #ffffff;
+  border-radius: 20px 20px 0 0;
+  padding: 20px 20px 40px;
+  margin-top: -16px;
+  flex: 1;
+}
+
+.mapa-coord-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.mapa-coord-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 0.5px solid #E8EAED;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.mapa-coord-label {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.mapa-coord-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  font-family: monospace;
+}
+
+.mapa-btn-open {
+  --background:    #E8A020;
+  --color:         #111827;
+  --border-radius: 14px;
+  margin-top: 20px;
+  font-weight: 700;
+}

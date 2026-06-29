@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="start" fill="clear" (click)="volver()">
+      <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-title>Mi ubicación</ion-title>
+    <ion-button slot="end" fill="clear" (click)="iniciarGeolocalizacion()">
+      <ion-icon name="locate-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="mapa-content">
+
+  <div *ngIf="isLoading" class="mapa-loading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Obteniendo ubicación...</p>
+  </div>
+
+  <div *ngIf="errorMsg" class="mapa-error">
+    <p>{{ errorMsg }}</p>
+    <ion-button size="small" (click)="iniciarGeolocalizacion()">
+      Reintentar
+    </ion-button>
+  </div>
+
+  <div *ngIf="latitud && longitud && !isLoading" class="mapa-wrap">
+
+    <!-- Imagen estática de Google Maps con marcador -->
+    <div class="mapa-frame-wrap" (click)="abrirEnMaps()">
+      <img
+        class="mapa-frame"
+        [src]="mapImageUrl"
+        alt="Mapa de ubicación actual" />
+      <div class="mapa-tap-hint">Toca para abrir en Google Maps</div>
+    </div>
+
+    <!-- Coordenadas en tiempo real debajo del mapa -->
+    <div class="mapa-coords">
+      <div class="mapa-coord-title">Ubicación en tiempo real</div>
+
+      <div class="mapa-coord-row">
+        <span class="mapa-coord-label">Latitud</span>
+        <span class="mapa-coord-value">{{ latitud | number:'1.6-6' }}</span>
+      </div>
+
+      <div class="mapa-coord-row">
+        <span class="mapa-coord-label">Longitud</span>
+        <span class="mapa-coord-value">{{ longitud | number:'1.6-6' }}</span>
+      </div>
+
+      <div class="mapa-coord-row">
+        <span class="mapa-coord-label">Precisión</span>
+        <span class="mapa-coord-value">{{ precision | number:'1.0-0' }} m</span>
+      </div>
+
+      <ion-button
+        expand="block"
+        class="mapa-btn-open"
+        (click)="abrirEnMaps()">
+        Abrir en Google Maps
+      </ion-button>
+    </div>
+
+  </div>
+
+</ion-content>

@@ -14,7 +14,8 @@ import {
   ToastController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { logOutOutline } from 'ionicons/icons';
+import { logOutOutline, cameraOutline } from 'ionicons/icons';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { MisDatosComponent } from './components/mis-datos/mis-datos.component';
 import { ExperienciaLaboralComponent } from './components/experiencia-laboral/experiencia-laboral.component';
 import { CertificacionesComponent } from './components/certificaciones/certificaciones.component';
@@ -44,7 +45,8 @@ import { StorageService } from '../../services/storage';
 })
 export class PerfilMaestroPage {
 
-  segmentoActivo: string = 'mis-datos';
+  segmentoActivo: string    = 'mis-datos';
+  fotoPerfil:     string | null = null;
 
   constructor(
     private router:  Router,
@@ -52,7 +54,30 @@ export class PerfilMaestroPage {
     private storage: StorageService,
     private toast:   ToastController,
   ) {
-    addIcons({ logOutOutline });
+    addIcons({ logOutOutline, cameraOutline });
+    this.cargarFoto();
+  }
+
+  async cargarFoto(): Promise<void> {
+    this.fotoPerfil = await this.storage.get('tud_foto') || null;
+  }
+
+  async tomarFoto(): Promise<void> {
+    try {
+      const image = await Camera.getPhoto({
+        quality:      90,
+        allowEditing: true,
+        resultType:   CameraResultType.DataUrl,
+        source:       CameraSource.Prompt,
+      });
+      if (image.dataUrl) {
+        this.fotoPerfil = image.dataUrl;
+        this.storage.set('tud_foto', image.dataUrl);
+        this.mostrarToast('Foto actualizada');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   cambiarSegmento(event: any): void {
@@ -77,5 +102,14 @@ export class PerfilMaestroPage {
     await t.present();
 
     this.router.navigateByUrl('/login', { replaceUrl: true });
+  }
+
+  private async mostrarToast(msg: string): Promise<void> {
+    const t = await this.toast.create({
+      message:  msg,
+      duration: 2000,
+      position: 'bottom',
+    });
+    await t.present();
   }
 }

@@ -1,114 +1,141 @@
-.listado-content { --background: #F5F5F0; }
-
-.tud-header ion-toolbar { --background: #ffffff; }
-
-.search-area {
-  background: #ffffff;
-  padding: 8px 12px 4px;
+.lst-content {
+  --background: #F7F8FA;
 }
 
-.tud-searchbar {
-  --background: #F0EFE8;
-  --border-radius: 14px;
-  --box-shadow: none;
-  padding: 0;
-}
-
-.chips-scroll {
+.lst-offline-banner {
   display: flex;
+  align-items: center;
   gap: 8px;
-  overflow-x: auto;
-  padding: 6px 4px 8px;
-  scrollbar-width: none;
-  &::-webkit-scrollbar { display: none; }
-}
-
-ion-chip {
-  --background: #F0EFE8;
-  --color: rgba(0,0,0,0.5);
+  background: #FAEEDA;
+  border-left: 4px solid #E8A020;
+  padding: 10px 16px;
   font-size: 13px;
-  flex-shrink: 0;
-  transition: all 0.2s;
+  color: #633806;
 
-  &.chip-active {
-    --background: #E8A020;
-    --color: #111827;
-    font-weight: 600;
+  ion-icon {
+    font-size: 18px;
+    flex-shrink: 0;
   }
 }
 
-.chip-icon { margin-right: 4px; font-size: 14px; }
+.lst-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #9CA3AF;
+  font-size: 14px;
+}
 
-.result-count {
-  padding: 12px 16px 4px;
+.lst-error {
+  text-align: center;
+  padding: 40px 20px;
+  color: #DC2626;
+  font-size: 14px;
+}
+
+.lst-section-title {
   font-size: 12px;
-  color: rgba(0,0,0,0.4);
-  letter-spacing: 0.3px;
+  font-weight: 600;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px 16px 8px;
 }
 
-/* ── Skeleton ── */
-.skeleton-wrap { padding: 8px 12px; }
-
-.skeleton-card { margin-bottom: 10px; border-radius: 16px; }
-
-.sk-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  margin-right: 14px;
-  flex-shrink: 0;
-}
-
-.card-row { display: flex; align-items: center; }
-
-/* ── Lista real ── */
-.maestros-list { background: transparent; padding: 6px 12px; }
-
-.maestro-item {
-  --background: #ffffff;
-  --border-radius: 16px;
-  --padding-start: 14px;
-  --padding-end: 12px;
-  --padding-top: 12px;
-  --padding-bottom: 12px;
-  margin-bottom: 10px;
+.lst-card {
+  background: #ffffff;
   border-radius: 16px;
-  opacity: 0; /* AnimationController la mueve a 1 */
+  margin: 0 12px 12px;
+  padding: 16px;
+  border: 1px solid #E8EAED;
+  cursor: pointer;
 }
 
-.maestro-avatar {
-  width: 48px;
-  height: 48px;
+.lst-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.lst-avatar {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: #0F2D52;
-  color: #ffffff;
+  background: #E8A020;
+  color: #111827;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
-  margin-right: 14px;
   flex-shrink: 0;
 }
 
-.m-nombre  { font-size: 15px; font-weight: 600; color: #111827; margin-bottom: 2px; }
-.m-oficio  { font-size: 12px; color: rgba(0,0,0,0.45); margin-bottom: 4px; }
+.lst-info {
+  flex: 1;
+}
 
-.m-rating  { display: flex; align-items: center; gap: 4px; }
-.estrella  { color: #E8A020; font-size: 13px; }
-.rating-val   { font-size: 13px; font-weight: 600; color: #111827; }
-.rating-count { font-size: 12px; color: rgba(0,0,0,0.35); }
+.lst-nombre {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 3px;
+}
 
-.m-precio { text-align: right; }
-.precio   { font-size: 15px; font-weight: 700; color: #111827; margin: 0; }
-.precio-label { font-size: 11px; color: rgba(0,0,0,0.35); margin: 0; }
+.lst-oficio,
+.lst-tel {
+  font-size: 12px;
+  color: #6B7280;
+  margin: 0 0 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 
-/* ── Empty ── */
-.empty-state {
-  text-align: center;
-  padding: 48px 24px;
-  color: rgba(0,0,0,0.35);
+  ion-icon {
+    font-size: 12px;
+  }
+}
 
-  .empty-icon { font-size: 48px; display: block; margin-bottom: 12px; }
-  p { font-size: 14px; }
+.lst-rating {
+  font-size: 13px;
+  font-weight: 700;
+  color: #E8A020;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  ion-icon {
+    font-size: 14px;
+  }
+}
+
+.lst-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lst-solicitud {
+  background: #ffffff;
+  border-radius: 12px;
+  margin: 0 12px 10px;
+  padding: 12px 16px;
+  border: 1px solid #E8EAED;
+}
+
+.lst-sol-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.lst-sol-desc {
+  font-size: 14px;
+  color: #111827;
+  margin: 0;
+  flex: 1;
 }

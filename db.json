@@ -1,0 +1,40 @@
+{
+  "maestros": [
+    {
+      "id": 1,
+      "nombre": "Juan Pérez",
+      "oficio": "Electricista",
+      "telefono": "+56912345678",
+      "email": "juan@tud.cl",
+      "rating": 4.8,
+      "disponible": true
+    },
+    {
+      "id": 2,
+      "nombre": "María González",
+      "oficio": "Gasfíter",
+      "telefono": "+56987654321",
+      "email": "maria@tud.cl",
+      "rating": 4.5,
+      "disponible": true
+    },
+    {
+      "id": 3,
+      "nombre": "Carlos Rojas",
+      "oficio": "Pintor",
+      "telefono": "+56911223344",
+      "email": "carlos@tud.cl",
+      "rating": 4.2,
+      "disponible": false
+    }
+  ],
+  "solicitudes": [
+    {
+      "id": 1,
+      "clienteEmail": "cliente@tud.cl",
+      "maestroId": 1,
+      "descripcion": "Instalación de enchufes",
+      "estado": "pendiente"
+    }
+  ]
+}

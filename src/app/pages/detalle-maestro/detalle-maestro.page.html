@@ -4,6 +4,11 @@
       <ion-back-button defaultHref="/cliente/listado" text=""></ion-back-button>
     </ion-buttons>
     <ion-title>Perfil del maestro</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="editarDisponibilidad()">
+        <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -31,6 +36,30 @@
         <p class="hstat-label">/ hora</p>
       </div>
     </div>
+  </div>
+
+  <!-- Datos desde API (PUT disponible) -->
+  <div class="api-card" *ngIf="maestroApi && !isLoading">
+    <p class="api-label">Datos desde API</p>
+    <div class="api-row">
+      <span class="api-key">Teléfono</span>
+      <span class="api-val">{{ maestroApi.telefono }}</span>
+    </div>
+    <div class="api-row">
+      <span class="api-key">Email</span>
+      <span class="api-val">{{ maestroApi.email }}</span>
+    </div>
+    <div class="api-row">
+      <span class="api-key">Disponible</span>
+      <span class="api-val" [style.color]="maestroApi.disponible ? '#25A85A' : '#DC2626'">
+        {{ maestroApi.disponible ? 'Sí' : 'No' }}
+      </span>
+    </div>
+  </div>
+
+  <div class="api-loading" *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <span>Cargando datos API...</span>
   </div>
 
   <!-- Info -->

@@ -6,6 +6,15 @@
     </ion-button>
   </ion-toolbar>
 
+  <!-- Foto de perfil con cámara -->
+  <div class="pm-avatar-wrap">
+    <div class="pm-avatar" (click)="tomarFoto()">
+      <img *ngIf="fotoPerfil" [src]="fotoPerfil" alt="Foto de perfil" />
+      <ion-icon *ngIf="!fotoPerfil" name="camera-outline" class="pm-camera-icon"></ion-icon>
+    </div>
+    <p class="pm-avatar-hint">Toca para cambiar foto</p>
+  </div>
+
   <ion-toolbar>
     <ion-segment
       [value]="segmentoActivo"
