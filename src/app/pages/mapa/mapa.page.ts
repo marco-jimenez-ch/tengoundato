@@ -78,12 +78,12 @@ export class MapaPage implements OnInit, OnDestroy {
     }
   }
 
-  // Imagen estática de Google Maps con marcador en la posición actual
+  // OpenStreetMap — sin API Key requerida
   get mapImageUrl(): string {
     if (this.latitud && this.longitud) {
       const lat = this.latitud;
       const lng = this.longitud;
-      return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=15&size=600x300&markers=color:red%7C${lat},${lng}&key=GOOGLE_API_KEY_REMOVED`;
+      return `https://staticmap.openstreetmap.de/staticmap.php?center=${lat},${lng}&zoom=15&size=600x300&markers=${lat},${lng},red`;
     }
     return '';
   }
@@ -95,6 +95,7 @@ export class MapaPage implements OnInit, OnDestroy {
     return '';
   }
 
+  // Limpia el observador al salir — performance según guía S5
   ngOnDestroy(): void {
     if (this.watchId !== null) {
       Geolocation.clearWatch({ id: this.watchId });
